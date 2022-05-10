@@ -10,7 +10,7 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<Pokemon[]> {
+  getPokemons(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>('http://127.0.0.1:3000/pokemon/')
   }
 
