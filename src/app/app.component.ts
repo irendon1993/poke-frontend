@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.onGetPokemons();
+    this.onGetPokemon();
     }
 
   onGetPokemons(): void {
@@ -20,6 +21,14 @@ export class AppComponent implements OnInit {
       (response) => console.log(response),
       (error: any) => console.log(error),
       () => console.log('Done getting Poekmon')
+    );
+  }
+
+  onGetPokemon(): void {
+    this.pokemonService.getPokemon().subscribe(
+      (response) => console.log(response),
+      (error: any) => console.log(error),
+      () => console.log('Done getting Pokemon')
     );
   }
 
