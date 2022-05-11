@@ -19,4 +19,8 @@ export class PokemonService {
   getPokemon(): Observable<Pokemon> {
     return this.http.get<Pokemon>(`${this.apiUrl}/pokemon/245`)
   }
+
+  createPokemon(pokemon: Pokemon): Observable<Pokemon> {
+    return this.http.post<Pokemon>(`${this.apiUrl}/create`,pokemon)
+  }
 }
