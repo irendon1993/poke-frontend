@@ -1,0 +1,36 @@
+div {
+  border: red solid 1px;
+}
+
+body {
+  background-image: url(".../assets/poke-background.jpg"); 
+}
+
+.body {
+  height: 80vh;
+}
+
+.game-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.hud {
+  width: 20%
+}
+
+.player {
+  height: 20%;
+}
+
+.party {
+ height: 80%;
+ /* width: 20%; */
+ align-items: center;
+}
+
+.game {
+  height: 100%;
+  width: 80%;
+}
