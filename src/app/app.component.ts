@@ -19,9 +19,9 @@ export class AppComponent implements OnInit {
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit(): void {
-    this.onGetPokemons();
+    // this.onGetPokemons();
     // this.onGetPokemon();
-    this.onCreatePokemon();
+    // this.onCreatePokemon();
     }
 
   onGetPokemons(): void {
@@ -40,12 +40,12 @@ export class AppComponent implements OnInit {
     );
   }
   
-  onCreatePokemon(): void {
-    this.pokemonService.createPokemon(this.pokemon).subscribe(
-      (response) => console.log(response),
-      (error: any) => console.log(error),
-      () => console.log('Done creating Pokemon')
-    );
-  }
+  // onCreatePokemon(): void {
+  //   this.pokemonService.createPokemon(this.pokemon).subscribe(
+  //     (response) => console.log(response),
+  //     (error: any) => console.log(error),
+  //     () => console.log('Done creating Pokemon')
+  //   );
+  // }
 
 }
