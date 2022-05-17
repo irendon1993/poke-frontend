@@ -12,7 +12,16 @@
         </ul>
       </div>
     </div>
-    <div class="game"></div>
+    <div class="game">
+      <div class="signUp">
+          <form #trainerPost="ngForm" (ngSubmit)="onSubmit(trainerPost.value)">
+            <input type="text" name="username" ngModel placeholder="username"> <br><br>
+            <input type="text" name="password" ngModel placeholder="password"> <br><br>
+            <!-- <input type="text" name="confirmPassword" ngModel placeholder="confirm password"> <br><br> -->
+           <button type="submit">Submit Data</button>
+          </form>
+      </div>
+    </div>
   </div>
 </div>
 

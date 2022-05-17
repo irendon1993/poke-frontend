@@ -5,4 +5,5 @@ export interface Pokemon {
   iamgeurl: any;
   created_at?: string;
   updated_at?: string;
+
 }

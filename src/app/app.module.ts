@@ -4,16 +4,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiTestComponent } from './api-test/api-test.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ApiTestComponent
+    ApiTestComponent,
+
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule
     
   ],
   providers: [],

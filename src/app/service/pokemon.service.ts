@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs'
 import { Pokemon } from '../interface/pokemon';
+import { Trainer} from '../interface/trainer'
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -22,5 +23,9 @@ export class PokemonService {
 
   createPokemon(pokemon: Pokemon): Observable<Pokemon> {
     return this.http.post<Pokemon>(`${this.apiUrl}/create`,pokemon)
+  }
+
+  getTrainerId(): Observable<Trainer> {
+    return this.http.get<Trainer>(`${this.apiUrl}/trainer/1`)
   }
 }

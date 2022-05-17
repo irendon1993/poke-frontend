@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit(): void {
+    this.onGetTrainerId();
     // this.onGetPokemons();
     // this.onGetPokemon();
     // this.onCreatePokemon();
@@ -37,6 +38,14 @@ export class AppComponent implements OnInit {
       (response) => console.log(response),
       (error: any) => console.log(error),
       () => console.log('Done getting Pokemon')
+    );
+  }
+
+  onGetTrainerId(): void {
+    this.pokemonService.getTrainerId().subscribe(
+      (response) => console.log(response),
+      (error: any) => console.log(error),
+      () => console.log('Done getting Trainer')
     );
   }
   
