@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient } from '@angular/common/http'
 
 
 @Component({
@@ -7,6 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./api-test.component.css']
 })
 export class ApiTestComponent implements OnInit {
+
+  constructor( private http:HttpClient){}
+  onSubmit(data: any) 
+  {
+    this.http.post('http://localhost:3000/sign_up', data)
+    .subscribe((result)=>{
+      console.warn("result",result)
+    })
+    console.warn(data)
+  }
+  
+  ngOnInit(): void {
+  }
+
+  
+
   // searchPokemon(term: string): observable<Pokemon[]>{
 
   //   const params = new HttpParams({fromString: '25=term'});
@@ -15,9 +32,6 @@ export class ApiTestComponent implements OnInit {
   //   )
   // } 
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  
 
 }
