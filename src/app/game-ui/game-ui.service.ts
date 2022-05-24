@@ -8,7 +8,7 @@ import { Trainer } from '../interface/trainer';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiTestService {
+export class GameUiService {
 
   private apiUrl = environment.apiUrl;
 

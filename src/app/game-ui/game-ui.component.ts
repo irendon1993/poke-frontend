@@ -3,11 +3,11 @@ import {HttpClient } from '@angular/common/http'
 
 
 @Component({
-  selector: 'api-test',
-  templateUrl: './api-test.component.html',
-  styleUrls: ['./api-test.component.css']
+  selector: 'game-ui',
+  templateUrl: './game-ui.component.html',
+  styleUrls: ['./game-ui.component.css']
 })
-export class ApiTestComponent implements OnInit {
+export class GameUiComponent implements OnInit {
 
   constructor( private http:HttpClient){}
   onSubmit(data: any) 

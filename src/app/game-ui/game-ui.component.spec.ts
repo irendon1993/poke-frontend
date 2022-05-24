@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ApiTestComponent } from './api-test.component';
+import { GameUiComponent } from './game-ui.component';
 
-describe('ApiTestComponent', () => {
-  let component: ApiTestComponent;
-  let fixture: ComponentFixture<ApiTestComponent>;
+describe('GameUiComponent', () => {
+  let component: GameUiComponent;
+  let fixture: ComponentFixture<GameUiComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ApiTestComponent ]
+      declarations: [ GameUiComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ApiTestComponent);
+    fixture = TestBed.createComponent(GameUiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
