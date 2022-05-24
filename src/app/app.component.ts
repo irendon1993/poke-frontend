@@ -1,10 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Pokemon } from './interface/pokemon';
-import { PokemonService, Response, User } from './service/pokemon.service';
-import { HttpClient} from '@angular/common/http';
+import { PokemonService, Response, User } from './pokemon/pokemon.service';
 import { environment } from 'src/environments/environment';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 
 
 @Component({
@@ -42,19 +39,6 @@ export class AppComponent implements OnInit {
     // this.onCreatePokemon();
     }
 
-  //   onGetUserData() {
-  //   this.pokemonService.getUserId().subscribe(res => {
-  //     console.log(res);
-  //     this.data = res;
-  //     console.log(this.data);
-  //  });
-  // }
-
-    // public getuser() {
-    //   return this.http.get(`${this.apiUrl}/trainer/1`)
-    //   .map((res: Response))
-
-    // }
   // onGetPokemons(): void {
   //   this.pokemonService.getPokemons().subscribe(
   //     (response) => console.table(response),

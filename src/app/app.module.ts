@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GameUiComponent } from './game-ui/game-ui.component';
 import { FormsModule } from '@angular/forms';
+import { PokemonComponent } from './pokemon/pokemon.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameUiComponent
+    GameUiComponent,
+    PokemonComponent
 
   ],
   imports: [
