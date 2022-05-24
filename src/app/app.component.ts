@@ -5,7 +5,7 @@ import { HttpClient} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-// import {UserService,  } from './user/user.service';
+
 
 @Component({
   selector: 'app-root',
