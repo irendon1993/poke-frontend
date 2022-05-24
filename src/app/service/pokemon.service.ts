@@ -1,9 +1,26 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs'
+import {map} from 'rxjs/operators';
 import { Pokemon } from '../interface/pokemon';
 import { Trainer} from '../interface/trainer'
 import { environment } from 'src/environments/environment';
+
+export interface User {
+  id: number;
+  name: string;
+  password?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface Response {
+  id: number;
+  name: string;
+  password?: string;
+  created_at?: string;
+  updated_at?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +42,9 @@ export class PokemonService {
     return this.http.post<Pokemon>(`${this.apiUrl}/create`,pokemon)
   }
 
-  getTrainerId(): Observable<Trainer> {
-    return this.http.get<Trainer>(`${this.apiUrl}/trainer/1`)
+  getUserId(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/master/2`)
   }
+
+  
 }

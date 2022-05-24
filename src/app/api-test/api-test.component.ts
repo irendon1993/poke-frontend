@@ -21,7 +21,7 @@ export class ApiTestComponent implements OnInit {
   
   ngOnInit(): void {
   }
-
+  
   
 
   // searchPokemon(term: string): observable<Pokemon[]>{
