@@ -11,18 +11,14 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
   error: any;
-  party: string[]=[];
-  headers: string[] = [];
-  data: any;
   user: User| undefined;
-  title = 'poke-frontend';
-  response : Response | undefined; 
-  private apiUrl = environment.apiUrl;
-  private pokemon: Pokemon = {
-    'pokeid': '455',
-    'name': 'mew',
-    'iamgeurl': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png'
-  }
+
+
+  // private pokemon: Pokemon = {
+  //   'pokeid': '455',
+  //   'name': 'mew',
+  //   'iamgeurl': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png'
+  // }
 
   
   
@@ -47,6 +43,13 @@ export class AppComponent implements OnInit {
   //   );
   // }
 
+  // onGetPokemon(): void {
+  //   this.pokemonService.getPokemon().subscribe(
+  //     (response) => console.table(response),
+  //     (error: any) => console.log(error),
+  //     () => console.log('Done getting Poekmon')
+  //   );
+  // }
 
   // onCreatePokemon(): void {
   //   this.pokemonService.createPokemon(this.pokemon).subscribe(
