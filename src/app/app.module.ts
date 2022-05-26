@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { GameUiComponent } from './game-ui/game-ui.component';
 import { FormsModule } from '@angular/forms';
 import { PokemonComponent } from './pokemon/pokemon.component';
+import { PartyComponent } from './party/party.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     GameUiComponent,
-    PokemonComponent
+    PokemonComponent,
+    PartyComponent
 
   ],
   imports: [
