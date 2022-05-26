@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-import { Pokemon } from '../interface/pokemon';
+import {Pokemon} from "./party.service"
+// import { Pokemon } from '../interface/pokemon';
 import { PokemonService, Response, User } from '../pokemon/pokemon.service';
 import { BehaviorSubject } from 'rxjs';
 import { PartyService } from './party.service';
@@ -17,36 +18,98 @@ export class PartyComponent implements OnInit {
   pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
   pokeParty: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
+  partyResponse: BehaviorSubject<any> = new BehaviorSubject({});
+
+  partyOne:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  partyTwo:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  partyThree:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  
   constructor(private partyService: PartyService) { }
 
   ngOnInit(): void {
-    this.onGetUserId();
     this.onGetTrainerId();
-  }
-
-  onGetUserId() {
-    this.partyService.getUserId()
-    .subscribe(data => this.user = {
-      id: (data as any).id,
-      name:  (data as any).name,
-    });
+    // this.onGetPokemon();
   }
 
 onGetTrainerId(): void {
   this.partyService.getUserId().subscribe(
     (response) => { 
     const test = response.pokeParty
-    console.log(test)
-    console.log(response)
+    // console.log(test)
     this.pokeResponse.next(response);
   },
     (error: any) => console.log(error),
     () => {
+
     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-    // console.log(this.pokeParty.value)
-    console.log(this.pokeParty.value[0])
-    } 
+    this.partyService.getPokemon(this.pokeParty.value[0]).subscribe(
+   
+      (response) => { 
+      this.partyResponse.next(response);
+    },
+
+      (error: any) => console.log(error),
+
+      () => {
+      this.partyOne.next(this.partyResponse.value.iamgeurl) 
+      console.log(this.partyResponse.value.iamgeurl)
+      } 
+
+    );
+
+    this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
+    this.partyService.getPokemon(this.pokeParty.value[1]).subscribe(
+    
+    (response) => { 
+      this.partyResponse.next(response);
+    },
+
+      (error: any) => console.log(error),
+
+      () => {
+      this.partyTwo.next(this.partyResponse.value.iamgeurl) 
+      console.log(this.partyResponse.value.iamgeurl)
+      } 
+
+    );
+
+    this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
+    this.partyService.getPokemon(this.pokeParty.value[2]).subscribe(
+    
+    (response) => { 
+      this.partyResponse.next(response);
+    },
+
+      (error: any) => console.log(error),
+
+      () => {
+      this.partyThree.next(this.partyResponse.value.iamgeurl) 
+      console.log(this.partyResponse.value.iamgeurl)
+      } 
+    
+    );
+    
+    },
   );
 }
+
+
+// onGetPokemon(): void {
+// this.partyService.getPokemon(this.pokeParty.value[0]).subscribe(
+//   (response) => { 
+//   const test = response.iamgeurl
+//   console.log(test)
+//   console.log(response)
+//   this.partyResponse.next(response);
+// },
+//   (error: any) => console.log(error),
+//   () => {
+//   this.iamgeurl.next(JSON.parse(this.partyResponse.value.iamgeurl)) 
+//   // console.log(this.pokeParty.value)
+//   console.log(this.pokeParty.value[0])
+//   } 
+// );
+// }
+
 
 }

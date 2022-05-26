@@ -28,38 +28,38 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.onGetUserId();
-    this.onGetTrainerId();
+    // this.onGetUserId();
+    // this.onGetTrainerId();
     // this.onGetUserData();
     // this.onGetPokemons();
     // this.onGetPokemon();
     // this.onCreatePokemon();
     }
 
-    onGetUserId() {
-      this.pokemonService.getUserId()
-      .subscribe(data => this.user = {
-        id: (data as any).id,
-        name:  (data as any).name,
-      });
-    }
+    // onGetUserId() {
+    //   this.pokemonService.getUserId()
+    //   .subscribe(data => this.user = {
+    //     id: (data as any).id,
+    //     name:  (data as any).name,
+    //   });
+    // }
 
-  onGetTrainerId(): void {
-    this.pokemonService.getUserId().subscribe(
-      (response) => { 
-      const test = response.pokeParty
-      console.log(test)
-      console.log(response)
-      this.pokeResponse.next(response);
-    },
-      (error: any) => console.log(error),
-      () => {
-      this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-      // console.log(this.pokeParty.value)
-      console.log(this.pokeParty.value[0])
-      } 
-    );
-  }
+  // onGetTrainerId(): void {
+  //   this.pokemonService.getUserId().subscribe(
+  //     (response) => { 
+  //     const test = response.pokeParty
+  //     console.log(test)
+  //     console.log(response)
+  //     this.pokeResponse.next(response);
+  //   },
+  //     (error: any) => console.log(error),
+  //     () => {
+  //     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
+  //     // console.log(this.pokeParty.value)
+  //     console.log(this.pokeParty.value[0])
+  //     } 
+  //   );
+  // }
 
   // onGetPokemons(): void {
   //   this.pokemonService.getPokemons().subscribe(

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs'
-import { Pokemon } from '../interface/pokemon';
+// import { Pokemon } from '../interface/pokemon';
 import { environment } from 'src/environments/environment';
 
 
@@ -9,9 +9,22 @@ export interface User {
   id: number;
   name: string;
   pokeParty?: string[];
+  iamgeurl?: string;
   password?: string;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface Pokemon {
+  id?: number;
+  pokeid: string;
+  name: string;
+  iamgeurl?: any;
+  partyOne?: any;
+  partyTwo?: any;
+  created_at?: string;
+  updated_at?: string;
+
 }
 
 export interface Response {
@@ -20,6 +33,7 @@ export interface Response {
   password?: string;
   created_at?: string;
   updated_at?: string;
+  iamgeurl?: string;
 }
 
 
@@ -33,12 +47,12 @@ export class PartyService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemons(): Observable<Pokemon[]> {
-    return this.http.get<Pokemon[]>(`${this.apiUrl}/pokemon`)
+  getPokemon(id: number): Observable<Pokemon> {
+    return this.http.get<Pokemon>(`${this.apiUrl}/pokemon/${id}`)
   }
 
   getUserId(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/master/2`)
+    return this.http.get<User>(`${this.apiUrl}/master/5`)
   }
 
   // getPokemon(): Observable<Pokemon> {
