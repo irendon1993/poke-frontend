@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Pokemon } from './interface/pokemon';
 import { PokemonService, Response, User } from './pokemon/pokemon.service';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -13,15 +13,16 @@ export class AppComponent implements OnInit {
   error: any;
   user: User| undefined;
 
+  pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  pokeParty: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
+
 
   // private pokemon: Pokemon = {
   //   'pokeid': '455',
   //   'name': 'mew',
   //   'iamgeurl': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png'
   // }
-
-  
-  
 
   constructor(private pokemonService: PokemonService) {}
 
@@ -34,6 +35,31 @@ export class AppComponent implements OnInit {
     // this.onGetPokemon();
     // this.onCreatePokemon();
     }
+
+    onGetUserId() {
+      this.pokemonService.getUserId()
+      .subscribe(data => this.user = {
+        id: (data as any).id,
+        name:  (data as any).name,
+      });
+    }
+
+  onGetTrainerId(): void {
+    this.pokemonService.getUserId().subscribe(
+      (response) => { 
+      const test = response.pokeParty
+      console.log(test)
+      console.log(response)
+      this.pokeResponse.next(response);
+    },
+      (error: any) => console.log(error),
+      () => {
+      this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
+      // console.log(this.pokeParty.value)
+      console.log(this.pokeParty.value[0])
+      } 
+    );
+  }
 
   // onGetPokemons(): void {
   //   this.pokemonService.getPokemons().subscribe(
@@ -60,23 +86,7 @@ export class AppComponent implements OnInit {
   // }
 
 
-    onGetUserId() {
-      this.pokemonService.getUserId()
-      .subscribe(data => this.user = {
-        id: (data as any).id,
-        name:  (data as any).name,
-      });
-    }
-
-    
-
-  onGetTrainerId(): void {
-    this.pokemonService.getUserId().subscribe(
-      (response) => console.log(response),
-      (error: any) => console.log(error),
-      () => console.log('Done getting Trainer')
-    );
-  }
+   
 
   
   

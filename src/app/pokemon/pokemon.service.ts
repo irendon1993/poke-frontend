@@ -5,10 +5,12 @@ import {map} from 'rxjs/operators';
 import { Pokemon } from '../interface/pokemon';
 import { Trainer} from '../interface/trainer'
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 export interface User {
   id: number;
   name: string;
+  pokeParty?: string[];
   password?: string;
   created_at?: string;
   updated_at?: string;
@@ -17,6 +19,7 @@ export interface User {
 export interface Response {
   id: number;
   name: string;
+
   password?: string;
   created_at?: string;
   updated_at?: string;
@@ -27,6 +30,7 @@ export interface Response {
 })
 export class PokemonService {
   private apiUrl = environment.apiUrl;
+  
 
   constructor(private http: HttpClient) { }
 
