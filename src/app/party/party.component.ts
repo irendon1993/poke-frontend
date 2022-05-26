@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Pokemon } from '../interface/pokemon';
 import { PokemonService, Response, User } from '../pokemon/pokemon.service';
 import { BehaviorSubject } from 'rxjs';
+import { PartyService } from './party.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class PartyComponent implements OnInit {
   pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
   pokeParty: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private partyService: PartyService) { }
 
   ngOnInit(): void {
     this.onGetUserId();
@@ -24,7 +25,7 @@ export class PartyComponent implements OnInit {
   }
 
   onGetUserId() {
-    this.pokemonService.getUserId()
+    this.partyService.getUserId()
     .subscribe(data => this.user = {
       id: (data as any).id,
       name:  (data as any).name,
@@ -32,7 +33,7 @@ export class PartyComponent implements OnInit {
   }
 
 onGetTrainerId(): void {
-  this.pokemonService.getUserId().subscribe(
+  this.partyService.getUserId().subscribe(
     (response) => { 
     const test = response.pokeParty
     console.log(test)

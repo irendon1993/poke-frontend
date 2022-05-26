@@ -16,7 +16,6 @@ export interface User {
 export interface Response {
   id: number;
   name: string;
-
   password?: string;
   created_at?: string;
   updated_at?: string;
@@ -25,6 +24,7 @@ export interface Response {
 @Injectable({
   providedIn: 'root'
 })
+
 export class PokemonService {
   private apiUrl = environment.apiUrl;
   

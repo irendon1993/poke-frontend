@@ -1,0 +1,29 @@
+div {
+  border: #F77F00 solid 1px;
+}
+
+
+.body {
+  height: 80vh;
+  
+  justify-content: center;
+}
+
+.game-container {
+  height: 100%;
+  background-color: #EAE2B7;
+  padding: 0 20% 0 20%;
+
+}
+
+.hud {
+  display: flex;
+  height: 20%;
+  background-color: #FCBF49;
+}
+
+
+.game {
+  height: 80%;
+  background-color: #FCBF49;
+}
