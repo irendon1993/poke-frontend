@@ -11,10 +11,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class GameUiComponent implements OnInit {
 
+  pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
+
   zoneResponse: BehaviorSubject<any> = new BehaviorSubject({});
   zone: BehaviorSubject<any> = new BehaviorSubject([]);
-
+  
+  
+  directionsResponse: BehaviorSubject<any> = new BehaviorSubject({});
   directions:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
+
   
   constructor( private gameService: GameUiService){}
 
@@ -29,38 +35,40 @@ export class GameUiComponent implements OnInit {
   
   ngOnInit(): void {
     this.onGetZone();
+    this.onOptionOne();
   }
   
   onGetZone(): void {
-    this.gameService.getZone().subscribe(
+    this.gameService.getTrainer().subscribe(
       (response) => {
-        this.zoneResponse.next(response);
+        this.pokeResponse.next(response);
         console.log(response)
-        console.log(this.zoneResponse)
+        // console.log(this.pokeResponse)
         // console.log(this.zone)
       },
 
       (error: any) => console.log(error),
       () => {
-        this.directions.next(JSON.parse(this.zoneResponse.value.directions))
-        console.log(this.directions)
-
-    // this.zone.next(JSON.parse(this.zoneResponse.value.directions))
-    // this.gameService.getZoneData(this.zone.value[0]).subscribe(
-      // (response) => { 
-      //   this.zoneResponse.next(response);
-      // },
-  
-      //   (error: any) => console.log(error),
-  
-      //   () => {
-      //   this.directionOne.next(this.zoneResponse.value.direction[0]) 
-      //   console.log(this.zoneResponse.value.direction[0]);
-      //   } 
-    // )
-
+        this.zone.next(JSON.parse(this.pokeResponse.value.currentZone))
+        // console.log(this.zone.value)
+        this.gameService.getZoneData(this.zone.value).subscribe(
+          
+          (response) => { 
+            this.directionsResponse.next(response);
+          },
+      
+            (error: any) => console.log(error),
+      
+            () => {
+            this.directions.next(JSON.parse(this.directionsResponse.value.directions)) 
+            // console.log(this.partyResponse.value.iamgeurl)
+            } 
+      
+        )
   },
-
-
 )}
+
+  onOptionOne(): void {
+
+  }
 }

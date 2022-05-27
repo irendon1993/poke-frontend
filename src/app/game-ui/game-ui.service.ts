@@ -55,11 +55,11 @@ export class GameUiService {
   constructor(private http: HttpClient) { }
 
   getTrainer() {
-    return this.http.get<Trainer>(`${this.apiUrl}/trainer/1`)
+    return this.http.get<Trainer>(`${this.apiUrl}/master/7`)
   }
 
   getZone(): Observable<Zone>  {
-    return this.http.get<Zone>(`${this.apiUrl}/zone/1`)
+    return this.http.get<Zone>(`${this.apiUrl}/zone/3`)
   }
 
   getZoneData(id: number): Observable<Zone> {

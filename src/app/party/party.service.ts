@@ -52,7 +52,7 @@ export class PartyService {
   }
 
   getUserId(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/master/5`)
+    return this.http.get<User>(`${this.apiUrl}/master/6`)
   }
 
   // getPokemon(): Observable<Pokemon> {
