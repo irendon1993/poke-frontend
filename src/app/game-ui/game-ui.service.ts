@@ -33,6 +33,10 @@ export interface Zone {
 
 }
 
+export interface NewZone {
+  id?: any;
+}
+
 export interface Pokemon {
   id?: number;
   pokeid: string;
@@ -45,10 +49,14 @@ export interface Pokemon {
 
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class GameUiService {
+
+  getNewZone = ''
+
 
   private apiUrl = environment.apiUrl;
 

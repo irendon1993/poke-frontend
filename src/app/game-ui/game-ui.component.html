@@ -1,7 +1,7 @@
 <div class="container">
   <div id="text">What will you do?</div>
   <div id="option-buttons" class="btn-grid">
-    <button class="btn" ngSubmit="">{{this.directions.value[0]}}</button>
+    <button class="btn" (click)="onOptionOne()">{{this.directions.value[0]}}</button>
     <button class="btn">Option 2</button>
     <button class="btn">Option 3</button>
     <button class="btn">Option 4</button>
