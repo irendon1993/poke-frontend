@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient } from '@angular/common/http'
-import { GameUiService } from './game-ui.service';
+import { GameUiService, NewZone } from './game-ui.service';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -21,6 +21,9 @@ export class GameUiComponent implements OnInit {
   directions:BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
 
+
+  // getZone = ''
+
   
   constructor( private gameService: GameUiService){}
 
@@ -35,10 +38,10 @@ export class GameUiComponent implements OnInit {
   
   ngOnInit(): void {
     this.onGetZone();
-    this.onOptionOne();
+    // this.onOptionOne();
   }
   
-  onGetZone(): void {
+  onGetZone() {
     this.gameService.getTrainer().subscribe(
       (response) => {
         this.pokeResponse.next(response);
@@ -56,19 +59,28 @@ export class GameUiComponent implements OnInit {
           (response) => { 
             this.directionsResponse.next(response);
           },
-      
+          
             (error: any) => console.log(error),
       
             () => {
-            this.directions.next(JSON.parse(this.directionsResponse.value.directions)) 
+            this.directions.next(JSON.parse(this.directionsResponse.value.directions))
+            console.log(this.zone.value)
+        
             // console.log(this.partyResponse.value.iamgeurl)
             } 
-      
-        )
+        ) 
   },
-)}
+)
+}
 
   onOptionOne(): void {
-
+    // On submit update trainer zone
+    this.gameService.getTrainer().subscribe(
+      (response) => {
+        this.pokeResponse.next(response);
+        console.log("Hello")
+        // 
+      }
+    )
   }
 }
