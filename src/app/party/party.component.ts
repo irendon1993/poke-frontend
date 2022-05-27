@@ -34,7 +34,7 @@ export class PartyComponent implements OnInit {
 onGetTrainerId(): void {
   this.partyService.getUserId().subscribe(
     (response) => { 
-    const test = response.pokeParty
+    // const test = response.pokeParty
     // console.log(test)
     this.pokeResponse.next(response);
   },

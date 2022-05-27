@@ -1,70 +1,45 @@
-div {
-  border: #F77F00 solid 1px;
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: Gotham Rounded;
 }
 
+/* body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #333;
+} */
 
-.body {
-  height: 80vh;
+.container {
   
-  justify-content: center;
+  width: 800px;
+  max-width: 80%;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 2px;
 }
 
-.game-container {
-  height: 100%;
-  background-color: #EAE2B7;
-  padding: 0 20% 0 20%;
-
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
+  margin-top: 20px;
 }
 
-.hud {
-  display: flex;
-  height: 20%;
-  background-color: #FCBF49;
+.btn {
+  background-color: hsl(200, 100%, 50%);
+  border: 1px solid hsl(200, 100%, 30%);
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: white;
+  outline: none;
 }
 
-.player {
-  width: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.trainer-picture {
-  width: 80%;
-  height: 75%;
-  border-radius: 50%;
-}
-
-.party {
-  width: 75%;
-  display: flex;
-  align-items: center;
-  width: 90%;
-  justify-content: center;
-}
-
-.party-list {
-  display: flex;
-  list-style: none;
-  align-items: center;
-  /* justify-content: center; */
-  /* padding: 0; */
-  /* width: 85%; */
-  padding: 0 5% 0 5%;
-}
-
-.poke-list-item{
-  width: 90%;
-}
-
-.poke-pic {
-  width: 80%;
-  height: 75%;
-  border-radius: 50%;
-  background-color: #EAE2B7;
-  /* padding: 0 2% 0 2%; */
-}
-.game {
-  height: 80%;
-  background-color: #FCBF49;
+.btn:hover {
+  border-color: black;
 }

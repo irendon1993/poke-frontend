@@ -18,4 +18,8 @@ export class GameUiService {
     return this.http.get<Trainer>(`${this.apiUrl}/trainer/1`)
   }
 
+  getZone() {
+    return this.http.get<Zone>(`${this.apiUrl}/zone/1`)
+  }
+
 }

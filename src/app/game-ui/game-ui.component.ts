@@ -24,14 +24,5 @@ export class GameUiComponent implements OnInit {
   
   
 
-  // searchPokemon(term: string): observable<Pokemon[]>{
-
-  //   const params = new HttpParams({fromString: '25=term'});
-  //     return this.httpClient.request({'GET', this."http://127.0.0.1:3000/pokemon/5", {responseType: 'json',
-  //   params}};
-  //   )
-  // } 
-
-  
 
 }
