@@ -52,7 +52,7 @@ onGetTrainerId(): void {
 
       () => {
       this.partyOne.next(this.partyResponse.value.iamgeurl) 
-      console.log(this.partyResponse.value.iamgeurl)
+      // console.log(this.partyResponse.value.iamgeurl)
       } 
 
     );
@@ -68,7 +68,7 @@ onGetTrainerId(): void {
 
       () => {
       this.partyTwo.next(this.partyResponse.value.iamgeurl) 
-      console.log(this.partyResponse.value.iamgeurl)
+      // console.log(this.partyResponse.value.iamgeurl)
       } 
 
     );
@@ -84,7 +84,7 @@ onGetTrainerId(): void {
 
       () => {
       this.partyThree.next(this.partyResponse.value.iamgeurl) 
-      console.log(this.partyResponse.value.iamgeurl)
+      // console.log(this.partyResponse.value.iamgeurl)
       } 
     
     );

@@ -27,14 +27,14 @@ export interface Pokemon {
 
 }
 
-export interface Response {
-  id: number;
-  name: string;
-  password?: string;
-  created_at?: string;
-  updated_at?: string;
-  iamgeurl?: string;
-}
+// export interface Response {
+//   id: number;
+//   name: string;
+//   password?: string;
+//   created_at?: string;
+//   updated_at?: string;
+//   iamgeurl?: string;
+// }
 
 
 @Injectable({
