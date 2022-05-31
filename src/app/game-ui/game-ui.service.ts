@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -56,14 +56,19 @@ export interface Pokemon {
 export class GameUiService {
 
   getNewZone = ''
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
 
 
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
+  
   getTrainer() {
-    return this.http.get<Trainer>(`${this.apiUrl}/master/7`)
+    return this.http.get<Trainer>(`${this.apiUrl}/master/9`)
   }
 
   getZone(): Observable<Zone>  {
@@ -73,5 +78,21 @@ export class GameUiService {
   getZoneData(id: number): Observable<Zone> {
     return this.http.get<Zone>(`${this.apiUrl}/zone/${id}`)
   }
+
+  changeZoneState(id: number, zone: number): Observable<Zone>{
+    const params = new HttpParams()
+      .set("zone", zone)
+    return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {params}, this.httpOptions)
+
+  }
+
+  changeZoneState2(): Observable<Zone>  {
+    // const params = new HttpParams()
+    //   .set("zone": 2)
+    return this.http.put<Zone>(`${this.apiUrl}/master/9/zone_update`, { "zone": "4" })
+   
+  }
+
+
 
 }

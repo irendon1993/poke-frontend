@@ -15,6 +15,8 @@ export class GameUiComponent implements OnInit {
 
   zoneResponse: BehaviorSubject<any> = new BehaviorSubject({});
   zone: BehaviorSubject<any> = new BehaviorSubject([]);
+  nextZone: BehaviorSubject<any> = new BehaviorSubject([]);
+
   
   
   directionsResponse: BehaviorSubject<any> = new BehaviorSubject({});
@@ -38,6 +40,7 @@ export class GameUiComponent implements OnInit {
   
   ngOnInit(): void {
     this.onGetZone();
+    // this.zoneTest();
     // this.onOptionOne();
   }
   
@@ -45,7 +48,7 @@ export class GameUiComponent implements OnInit {
     this.gameService.getTrainer().subscribe(
       (response) => {
         this.pokeResponse.next(response);
-        console.log(response)
+        // console.log(response)
         // console.log(this.pokeResponse)
         // console.log(this.zone)
       },
@@ -73,14 +76,53 @@ export class GameUiComponent implements OnInit {
 )
 }
 
+  zoneTest(){
+    this.gameService.changeZoneState2()
+    console.log("hello")
+  }
+
+  // On Option one change player zone to  next zone
+  //  then get zone data
   onOptionOne(): void {
     // On submit update trainer zone
     this.gameService.getTrainer().subscribe(
       (response) => {
         this.pokeResponse.next(response);
-        console.log("Hello")
+        console.log(response)
         // 
-      }
+      },
+      (error: any) => console.log(error),
+      () => {
+
+        this.zone.next(JSON.parse(this.pokeResponse.value.currentZone))
+        // console.log(this.zone.value)
+        this.gameService.getZoneData(this.zone.value).subscribe(
+          
+          (response) => { 
+            this.directionsResponse.next(response);
+          },
+          
+            (error: any) => console.log(error),
+      
+            () => {
+            this.nextZone.next(JSON.parse(this.directionsResponse.value.next_zone))
+            // console.log(this.directionsResponse.value)
+            console.log(this.nextZone.value)
+
+            this.gameService.changeZoneState(this.pokeResponse.value.id,this.nextZone.value[0])
+            console.log(this.pokeResponse.value.id)
+            console.log(this.nextZone.value[0])
+            
+            this.gameService.getZoneData(this.nextZone.value[0])  
+        
+        
+            // console.log(this.partyResponse.value.iamgeurl)
+            }
+            
+        ) 
+      },
+
+
     )
   }
 }
