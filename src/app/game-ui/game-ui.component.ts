@@ -108,7 +108,7 @@ export class GameUiComponent implements OnInit {
           (error: any) => console.log(error),
           () => {
             this.nextZone.next(JSON.parse(this.directionsResponse.value.next_zone))
-            this.gameService.changeZoneState(this.pokeResponse.value.id, 4).subscribe(
+            this.gameService.changeZoneState(this.pokeResponse.value.id, this.nextZone.value[1]).subscribe(
             
             (response) => { 
                 this.nextZoneResponse.next(response);
