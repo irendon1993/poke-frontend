@@ -75,22 +75,22 @@ export class GameUiService {
     return this.http.get<Zone>(`${this.apiUrl}/zone/3`)
   }
 
-  getZoneData(id: number): Observable<Zone> {
+  getZoneData(id: any): Observable<Zone> {
     return this.http.get<Zone>(`${this.apiUrl}/zone/${id}`)
   }
 
-  changeZoneState(id: number, zone: number): Observable<Zone>{
-    const params = new HttpParams()
-      .set("zone", zone)
-    return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {params}, this.httpOptions)
+  changeZoneState(id: number, zoneId: number): Observable<Zone>{
+    
+    return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {"zone": `${zoneId}`},  this.httpOptions)
+    // return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {params}, this.httpOptions)
 
   }
 
   changeZoneState2(): Observable<Zone>  {
     // const params = new HttpParams()
     //   .set("zone": 2)
-    return this.http.put<Zone>(`${this.apiUrl}/master/9/zone_update`, { "zone": "4" })
-   
+    return this.http.put<Zone>(`${this.apiUrl}/master/9/zone_update`, { "zone": 5}, this.httpOptions)
+    
   }
 
 

@@ -9,12 +9,15 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './game-ui.component.html',
   styleUrls: ['./game-ui.component.css']
 })
+
 export class GameUiComponent implements OnInit {
 
   pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   zoneResponse: BehaviorSubject<any> = new BehaviorSubject({});
   zone: BehaviorSubject<any> = new BehaviorSubject([]);
+
+  nextZoneResponse: BehaviorSubject<any> = new BehaviorSubject({});
   nextZone: BehaviorSubject<any> = new BehaviorSubject([]);
 
   
@@ -46,30 +49,22 @@ export class GameUiComponent implements OnInit {
   
   onGetZone() {
     this.gameService.getTrainer().subscribe(
+      
       (response) => {
         this.pokeResponse.next(response);
-        // console.log(response)
-        // console.log(this.pokeResponse)
-        // console.log(this.zone)
       },
-
       (error: any) => console.log(error),
       () => {
         this.zone.next(JSON.parse(this.pokeResponse.value.currentZone))
-        // console.log(this.zone.value)
         this.gameService.getZoneData(this.zone.value).subscribe(
           
           (response) => { 
             this.directionsResponse.next(response);
           },
-          
-            (error: any) => console.log(error),
-      
-            () => {
+          (error: any) => console.log(error),
+          () => {
             this.directions.next(JSON.parse(this.directionsResponse.value.directions))
             console.log(this.zone.value)
-        
-            // console.log(this.partyResponse.value.iamgeurl)
             } 
         ) 
   },
@@ -77,8 +72,20 @@ export class GameUiComponent implements OnInit {
 }
 
   zoneTest(){
-    this.gameService.changeZoneState2()
     console.log("hello")
+    this.gameService.changeZoneState2()
+    .subscribe(
+      (response) => { 
+        this.directionsResponse.next(response);
+        console.log(this.directionsResponse)
+      },
+      (error: any) => console.log(error),
+      () => {
+        // this.gameService.getZoneData(4)
+        window.location.reload()
+      }
+    );
+    
   }
 
   // On Option one change player zone to  next zone
@@ -86,34 +93,41 @@ export class GameUiComponent implements OnInit {
   onOptionOne(): void {
     // On submit update trainer zone
     this.gameService.getTrainer().subscribe(
+
       (response) => {
         this.pokeResponse.next(response);
-        console.log(response)
-        // 
       },
       (error: any) => console.log(error),
       () => {
-
         this.zone.next(JSON.parse(this.pokeResponse.value.currentZone))
-        // console.log(this.zone.value)
         this.gameService.getZoneData(this.zone.value).subscribe(
           
           (response) => { 
             this.directionsResponse.next(response);
           },
-          
-            (error: any) => console.log(error),
-      
-            () => {
+          (error: any) => console.log(error),
+          () => {
             this.nextZone.next(JSON.parse(this.directionsResponse.value.next_zone))
-            // console.log(this.directionsResponse.value)
-            console.log(this.nextZone.value)
-
-            this.gameService.changeZoneState(this.pokeResponse.value.id,this.nextZone.value[0])
-            console.log(this.pokeResponse.value.id)
-            console.log(this.nextZone.value[0])
+            this.gameService.changeZoneState(this.pokeResponse.value.id, 4).subscribe(
             
-            this.gameService.getZoneData(this.nextZone.value[0])  
+            (response) => { 
+                this.nextZoneResponse.next(response);
+                // console.log(this.nextZoneResponse)
+            },
+            (error: any) => console.log(error),
+            () => {
+              console.log(this.nextZone)
+              console.log(this.pokeResponse.value.id)
+              console.log(this.nextZone.value[0])
+            
+
+              window.location.reload()
+              // this.gameService.getZoneData(this.nextZone.value[0])  
+            }
+
+            
+            );
+            
         
         
             // console.log(this.partyResponse.value.iamgeurl)
