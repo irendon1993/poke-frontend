@@ -53,6 +53,7 @@ export interface Pokemon {
 @Injectable({
   providedIn: 'root'
 })
+
 export class GameUiService {
 
   getNewZone = ''
@@ -61,7 +62,8 @@ export class GameUiService {
   };
 
 
-
+  catchingPokemon = false;
+  
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
@@ -92,6 +94,8 @@ export class GameUiService {
     return this.http.put<Zone>(`${this.apiUrl}/master/9/zone_update`, { "zone": 5}, this.httpOptions)
     
   }
+
+  
 
 
 

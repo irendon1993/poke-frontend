@@ -25,7 +25,7 @@ export class GameUiComponent implements OnInit {
   directionsResponse: BehaviorSubject<any> = new BehaviorSubject({});
   directions:BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
-
+  catchingPokemon = false;
 
   // getZone = ''
 
@@ -47,6 +47,15 @@ export class GameUiComponent implements OnInit {
     // this.onOptionOne();
   }
   
+  catchPokemon() {
+    if(this.catchingPokemon === false) {
+      this.catchingPokemon = true;
+    }
+    else {
+      this.catchingPokemon = false;
+    }
+  }
+
   onGetZone() {
     this.gameService.getTrainer().subscribe(
       
@@ -82,7 +91,12 @@ export class GameUiComponent implements OnInit {
       (error: any) => console.log(error),
       () => {
         // this.gameService.getZoneData(4)
-        window.location.reload()
+        
+        console.log(this.catchingPokemon)
+        this.catchingPokemon = true;
+        // console.log(this.catchingPokemon)
+        // window.location.reload()
+
       }
     );
     
