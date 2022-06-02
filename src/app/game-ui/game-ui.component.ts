@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient } from '@angular/common/http'
 import { GameUiService, NewZone } from './game-ui.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Component({
@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 export class GameUiComponent implements OnInit {
 
   pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  party:BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
   zoneResponse: BehaviorSubject<any> = new BehaviorSubject({});
   zone: BehaviorSubject<any> = new BehaviorSubject([]);
@@ -30,7 +31,12 @@ export class GameUiComponent implements OnInit {
   wildPokemon:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   randomWildPokemon = 0;
   pokemonToCatch:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-
+  
+  
+  pcResponse: BehaviorSubject<any> = new BehaviorSubject([]);
+  pc: any;
+  pcArray: Observable<any>[]=[];
+  // pc:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   
 
   // getZone = ''
@@ -114,7 +120,7 @@ export class GameUiComponent implements OnInit {
   }
     
   throwPokeball() {
-    
+
   }
 
   onGetZone() {
@@ -142,19 +148,31 @@ export class GameUiComponent implements OnInit {
 }
 
   zoneTest(){
-    console.log("hello")
-    this.gameService.changeZoneState2()
-    .subscribe(
+    this.gameService.getTrainer().subscribe(
       (response) => { 
-        this.directionsResponse.next(response);
-        console.log(this.directionsResponse)
+        this.pokeResponse.next(response);
+        console.log(this.pokeResponse.value.id)
       },
       (error: any) => console.log(error),
       () => {
+        this.pcResponse.next(JSON.parse(this.pokeResponse.value.poke_party))
+        
+        // console.log(this.pcResponse.value)
+        // this.pcArray.push(this.pcResponse.value)
+        this.pc = this.pcResponse.value
+        // console.log(this.pc)
+        this.pc.push('2')
+        
+        console.log(this.pc)
+        this.gameService.addPokemonToPc(this.pokeResponse.value.id,this.pc).subscribe(
+
+        )
+        // console.log(this.pcArray[0])
+       
         // this.gameService.getZoneData(4)
         
-        console.log(this.catchingPokemon)
-        this.catchingPokemon = true;
+        // console.log(this.catchingPokemon)
+        // this.catchingPokemon = true;
         // console.log(this.catchingPokemon)
         // window.location.reload()
 

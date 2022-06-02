@@ -91,8 +91,8 @@ export class GameUiService {
 
   }
 
-  addPokemonToPc(id: number, pokemonId: number): Observable<Trainer> {
-    return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {"pokemon": `${pokemonId}`},  this.httpOptions)
+  addPokemonToPc(id: number, pokemon: any): Observable<Trainer> {
+    return this.http.put<Trainer>(`${this.apiUrl}/master/${id}/pc_update`, { "pokemon": {pokemon} },  this.httpOptions)
   }
 
   changeZoneState2(): Observable<Zone>  {
