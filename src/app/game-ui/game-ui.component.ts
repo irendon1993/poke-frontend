@@ -24,8 +24,14 @@ export class GameUiComponent implements OnInit {
   
   directionsResponse: BehaviorSubject<any> = new BehaviorSubject({});
   directions:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-
+  
   catchingPokemon = false;
+  wildPokemonResponse: BehaviorSubject<any> = new BehaviorSubject({});
+  wildPokemon:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  randomWildPokemon = 0;
+  pokemonToCatch:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
+  
 
   // getZone = ''
 
@@ -46,6 +52,20 @@ export class GameUiComponent implements OnInit {
     // this.zoneTest();
     // this.onOptionOne();
   }
+
+  reload() {
+    if(this.catchingPokemon === false) {
+      this.catchingPokemon = true;
+    }
+    else {
+      this.catchingPokemon = false;
+    }
+  }
+
+  getRandomInt(max:number) {
+    return Math.floor(Math.random() * max);
+  }
+  
   
   catchPokemon() {
     if(this.catchingPokemon === false) {
@@ -54,6 +74,47 @@ export class GameUiComponent implements OnInit {
     else {
       this.catchingPokemon = false;
     }
+
+    this.gameService.getTrainer().subscribe(
+
+      (response) => {
+        this.pokeResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+        this.zone.next(JSON.parse(this.pokeResponse.value.currentZone))
+        this.gameService.getZoneData(this.zone.value).subscribe(
+          
+          (response) => { 
+            this.zoneResponse.next(response);
+          },
+          (error: any) => console.log(error),
+          () => {
+            this.wildPokemon.next(JSON.parse(this.zoneResponse.value.wild_pokemon));
+            // console.log(this.wildPokemon.value)
+            this.randomWildPokemon = this.getRandomInt(this.wildPokemon.value.length)
+            console.log(this.randomWildPokemon)
+
+            this.gameService.getPokemon(this.wildPokemon.value[this.randomWildPokemon]).subscribe(
+              (response) => {
+                
+                this.wildPokemonResponse.next(response);
+              },
+              (error: any) => console.log(error),
+              () => {
+                // console.log(this.wildPokemon.value)
+                this.pokemonToCatch.next(this.wildPokemonResponse.value.iamgeurl)
+                
+              }
+            )
+          }
+        )
+        }
+    )
+  }
+    
+  throwPokeball() {
+    
   }
 
   onGetZone() {

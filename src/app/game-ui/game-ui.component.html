@@ -1,15 +1,22 @@
 <div class="container">
-  <div id="text">What will you do?</div>
+  <div id="text" *ngIf="!catchingPokemon">What will you do?</div>
   <div id="option-buttons" class="btn-grid" *ngIf="!catchingPokemon">
     <button class="btn" (click)="onOptionOne()">{{this.directions.value[0]}}</button>
     <!-- <button class="btn" (click)="onOptionOne()">{{this.directions.value[1]}}</button>
     <button class="btn" (click)="onOptionOne()">{{this.directions.value[2]}}</button> -->
     <button class="btn" (click)="zoneTest()">Option 2</button>
-    <button class="btn" (click)="catchPokemon()">Option 3</button>
+    <button class="btn" (click)="catchPokemon()">Catch a pokemon</button>
     <button class="btn">Option 4</button>
   </div>
 
-  <div *ngIf="catchingPokemon">
-    <p>Testing</p>
+  <div class="wildPokemon" *ngIf="catchingPokemon">
+    <div class="text">A wild {{this.wildPokemonResponse.value.name}} appeared</div>
+    <img class="poke-pic" src={{this.pokemonToCatch.value}}>
+    <div class="option-buttons" class="btn-grid" *ngIf="catchingPokemon">
+      <button class="btn">Throw a Pokeball</button>
+      <button class="btn" (click)="reload()">Go Back</button>
+
+    </div>
+
   </div>
 </div>

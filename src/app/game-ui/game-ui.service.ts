@@ -63,12 +63,15 @@ export class GameUiService {
 
 
   catchingPokemon = false;
-  
+
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  
+  getPokemon(id: number): Observable<Pokemon> {
+    return this.http.get<Pokemon>(`${this.apiUrl}/pokemon/${id}`)
+  }
+
   getTrainer() {
     return this.http.get<Trainer>(`${this.apiUrl}/master/9`)
   }
@@ -86,6 +89,10 @@ export class GameUiService {
     return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {"zone": `${zoneId}`},  this.httpOptions)
     // return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {params}, this.httpOptions)
 
+  }
+
+  addPokemonToPc(id: number, pokemonId: number): Observable<Trainer> {
+    return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {"pokemon": `${pokemonId}`},  this.httpOptions)
   }
 
   changeZoneState2(): Observable<Zone>  {

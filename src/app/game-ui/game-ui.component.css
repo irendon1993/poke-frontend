@@ -3,16 +3,6 @@
   font-family: Gotham Rounded;
 }
 
-/* body {
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: #333;
-} */
 
 .container {
   
@@ -42,4 +32,23 @@
 
 .btn:hover {
   border-color: black;
+}
+
+
+.poke-pic {
+  width: 80%;
+  height: 75%;
+  border-radius: 50%;
+  background-color: #EAE2B7;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10%;
+  /* padding: 0 2% 0 2%; */
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
 }
