@@ -82,7 +82,7 @@ export class GameUiService {
   }
   
   getGameState(): Observable<Zone>  {
-    return this.http.get<Zone>(`${this.apiUrl}/game/2`)
+    return this.http.get<Zone>(`${this.apiUrl}/game2/1`)
   }
 
   getZoneData(id: any): Observable<Zone> {
@@ -93,8 +93,13 @@ export class GameUiService {
     return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {"zone": `${zoneId}`},  this.httpOptions)
   }
   
+  
   changeCurrentPokemon(id: number, pokemonId: number): Observable<Pokemon>{
     return this.http.put<Pokemon>(`${this.apiUrl}/master/${id}/pokemon_update`, {"pokemon": `${pokemonId}`},  this.httpOptions)
+  }
+  
+  addPcPic(id: number, pokemon:any): Observable<Trainer>{
+    return this.http.put<Trainer>(`${this.apiUrl}/master/${id}/pics_update`, {pokemon},  this.httpOptions)
   }
 
   addPokemonToPc(id: number, pokemon: any): Observable<Trainer> {
