@@ -26,7 +26,12 @@ export class GameUiComponent implements OnInit {
   directionsResponse: BehaviorSubject<any> = new BehaviorSubject({});
   directions:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   
-  catchingPokemon = false;
+  // catchingPokemon = false;
+  traveling = false;
+  newGame = true;
+  gameOver = false;
+  pokeBalls = 5;
+
   wildPokemonResponse: BehaviorSubject<any> = new BehaviorSubject({});
   wildPokemon:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   randomWildPokemon = 0;
@@ -55,19 +60,54 @@ export class GameUiComponent implements OnInit {
   // }
   
   ngOnInit(): void {
+    this.onGameInit();
     this.onGetZone();
     // this.zoneTest();
     // this.onOptionOne();
   }
 
-  reload() {
-    if(this.catchingPokemon === false) {
-      this.catchingPokemon = true;
-    }
-    else {
-      this.catchingPokemon = false;
-    }
+  
+
+  onGameInit() {
+    this.gameService.getGameState().subscribe(
+      (response) => {
+        this.pokeResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+            // console.log(this.pokeResponse.value.game_state)
+            this.newGame = this.pokeResponse.value.game_state;
+            // console.log(this.newGame)
+            if(this.pokeResponse.value.game_state == 1) {
+              this.newGame = false;
+              this.traveling = true;
+            }
+            
+           }
+    )
   }
+
+
+  reload() {
+    window.location.reload();
+  }
+
+
+
+  
+
+  // setGameState0() {
+  //   this.catchingPokemon = 0
+  // }
+  // setGameState1() {
+  //   this.catchingPokemon = 1
+  // }
+  // setGameState2() {
+  //   this.catchingPokemon = 2
+  // }
+  // setGameState3() {
+  //   this.catchingPokemon = 3
+  // }
 
   getRandomInt(max:number) {
     return Math.floor(Math.random() * max);
@@ -75,11 +115,11 @@ export class GameUiComponent implements OnInit {
   
   
   catchPokemon() {
-    if(this.catchingPokemon === false) {
-      this.catchingPokemon = true;
+    if(this.traveling === false) {
+      this.traveling = true;
     }
     else {
-      this.catchingPokemon = false;
+      this.traveling = false;
     }
 
     this.gameService.getTrainer().subscribe(
@@ -98,7 +138,6 @@ export class GameUiComponent implements OnInit {
           (error: any) => console.log(error),
           () => {
             this.wildPokemon.next(JSON.parse(this.zoneResponse.value.wild_pokemon));
-            // console.log(this.wildPokemon.value)
             this.randomWildPokemon = this.getRandomInt(this.wildPokemon.value.length)
            
 
@@ -111,7 +150,6 @@ export class GameUiComponent implements OnInit {
               },
               (error: any) => console.log(error),
               () => {
-                // console.log(this.wildPokemon.value)
                 this.pokemonToCatch.next(this.wildPokemonResponse.value.iamgeurl)
                 this.gameService.changeCurrentPokemon(this.pokeResponse.value.id, this.wildPokemonResponse.value.id).subscribe()
                 
@@ -131,51 +169,28 @@ export class GameUiComponent implements OnInit {
       (error: any) => console.log(error),
       () => {
 
-        console.log(this.pcResponse.value)
-        this.pcArray.push(this.pcResponse.value.pc)
-        this.pc = this.pcResponse.value
+        // console.log(this.pokeResponse.value)
+        // this.pcArray.push(this.pokeResponse.value.pc)
+        // console.log(this.pcArray)
+        this.pc = JSON.parse(this.pokeResponse.value.pc)
         console.log(this.pc)
         this.pc.push(this.pokeResponse.value.current_pokemon)
+        console.log(this.pc)
+        this.pokeBalls --
+        // console.log(this.pokeBalls)
+        if(this.pokeBalls === 0) {
+          this.gameOver = true;
+        
+        }
+        
         this.gameService.addPokemonToPc(this.pokeResponse.value.id, this.pc).subscribe()
+
         // this.pokemonToPcResponse.next(res)
       }
     )
   }
 
-  zoneTest(){
-    this.gameService.getTrainer().subscribe(
-      (response) => { 
-        this.pokeResponse.next(response);
-        console.log(this.pokeResponse.value.id)
-      },
-      (error: any) => console.log(error),
-      () => {
-        this.pcResponse.next(JSON.parse(this.pokeResponse.value.poke_party))
-        
-        console.log(this.pcResponse)
-        this.pcArray.push(this.pcResponse.value)
-        this.pc = this.pcResponse.value
-        console.log(this.pc)
-        // this.pc.push('2')
-        // console.log(this.pokeResponse)
-        
-        console.log(this.pc)
-        this.gameService.addPokemonToPc(this.pokeResponse.value.id,this.pc).subscribe(
-
-        )
-        // console.log(this.pcArray[0])
-       
-        // this.gameService.getZoneData(4)
-        
-        // console.log(this.catchingPokemon)
-        // this.catchingPokemon = true;
-        // console.log(this.catchingPokemon)
-        // window.location.reload()
-
-      }
-    );
-    
-  }
+  
 
   onGetZone() {
     this.gameService.getTrainer().subscribe(
@@ -237,6 +252,7 @@ export class GameUiComponent implements OnInit {
             
 
               window.location.reload()
+              // this.gameState()
               // this.gameService.getZoneData(this.nextZone.value[0])  
             }
 

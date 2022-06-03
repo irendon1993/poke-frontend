@@ -61,8 +61,9 @@ export class GameUiService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-
+  
   catchingPokemon = false;
+  
 
   private apiUrl = environment.apiUrl;
 
@@ -78,6 +79,10 @@ export class GameUiService {
 
   getZone(): Observable<Zone>  {
     return this.http.get<Zone>(`${this.apiUrl}/zone/3`)
+  }
+  
+  getGameState(): Observable<Zone>  {
+    return this.http.get<Zone>(`${this.apiUrl}/game/2`)
   }
 
   getZoneData(id: any): Observable<Zone> {
