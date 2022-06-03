@@ -85,14 +85,15 @@ export class GameUiService {
   }
 
   changeZoneState(id: number, zoneId: number): Observable<Zone>{
-    
     return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {"zone": `${zoneId}`},  this.httpOptions)
-    // return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {params}, this.httpOptions)
-
+  }
+  
+  changeCurrentPokemon(id: number, pokemonId: number): Observable<Pokemon>{
+    return this.http.put<Pokemon>(`${this.apiUrl}/master/${id}/pokemon_update`, {"pokemon": `${pokemonId}`},  this.httpOptions)
   }
 
   addPokemonToPc(id: number, pokemon: any): Observable<Trainer> {
-    return this.http.put<Trainer>(`${this.apiUrl}/master/${id}/pc_update`, { "pokemon": {pokemon} },  this.httpOptions)
+    return this.http.put<Trainer>(`${this.apiUrl}/master/${id}/pc_update`,  {pokemon} ,  this.httpOptions)
   }
 
   changeZoneState2(): Observable<Zone>  {
@@ -101,9 +102,6 @@ export class GameUiService {
     return this.http.put<Zone>(`${this.apiUrl}/master/9/zone_update`, { "zone": 5}, this.httpOptions)
     
   }
-
-  
-
 
 
 }

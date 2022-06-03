@@ -99,17 +99,20 @@ export class GameUiComponent implements OnInit {
             this.wildPokemon.next(JSON.parse(this.zoneResponse.value.wild_pokemon));
             // console.log(this.wildPokemon.value)
             this.randomWildPokemon = this.getRandomInt(this.wildPokemon.value.length)
-            console.log(this.randomWildPokemon)
+           
 
             this.gameService.getPokemon(this.wildPokemon.value[this.randomWildPokemon]).subscribe(
               (response) => {
                 
                 this.wildPokemonResponse.next(response);
+                console.log(this.wildPokemonResponse.value.id)
+                console.log(this.pokeResponse.value.id)
               },
               (error: any) => console.log(error),
               () => {
                 // console.log(this.wildPokemon.value)
                 this.pokemonToCatch.next(this.wildPokemonResponse.value.iamgeurl)
+                this.gameService.changeCurrentPokemon(this.pokeResponse.value.id, this.wildPokemonResponse.value.id).subscribe()
                 
               }
             )
@@ -157,11 +160,12 @@ export class GameUiComponent implements OnInit {
       () => {
         this.pcResponse.next(JSON.parse(this.pokeResponse.value.poke_party))
         
-        // console.log(this.pcResponse.value)
-        // this.pcArray.push(this.pcResponse.value)
+        console.log(this.pcResponse)
+        this.pcArray.push(this.pcResponse.value)
         this.pc = this.pcResponse.value
-        // console.log(this.pc)
+        console.log(this.pc)
         this.pc.push('2')
+        // console.log(this.pokeResponse)
         
         console.log(this.pc)
         this.gameService.addPokemonToPc(this.pokeResponse.value.id,this.pc).subscribe(
