@@ -27,6 +27,8 @@
   </div>
 
   <div class="gameOver" *ngIf="gameOver">
-      test
+      <div *ngFor="let pic of this.picArray.value; let i = index">
+        <img *ngIf="i !=0 && i != picArray.value.length" src={{pic}} class="poke-pic">
+      </div>
   </div>
 </div>
