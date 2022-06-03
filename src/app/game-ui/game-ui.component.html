@@ -17,9 +17,7 @@
       <button class="btn" (click)="reload()" >Go Back</button>
     </div>
 
-    
-    
-
+  
   </div>
 
   <div class="newGame" *ngIf="newGame">
@@ -27,8 +25,9 @@
   </div>
 
   <div class="gameOver" *ngIf="gameOver">
-      <div *ngFor="let pic of this.picArray.value; let i = index">
-        <img *ngIf="i !=0 && i != picArray.value.length" src={{pic}} class="poke-pic">
+      <div *ngFor="let pic of this.picArray.value | slice: 0 let i = index">
+        <img *ngIf="pic !='null'" src={{pic}} class="poke-pic">
       </div>
+      <img src={{this.pokemonToPcResponse.value.iamgeurl}} class="poke-pic">
   </div>
 </div>
