@@ -33,6 +33,7 @@ export class GameUiComponent implements OnInit {
   pokemonToCatch:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   
   
+  pokemonToPcResponse: BehaviorSubject<any> = new BehaviorSubject({});
   pcResponse: BehaviorSubject<any> = new BehaviorSubject([]);
   pc: any;
   pcArray: Observable<any>[]=[];
@@ -123,7 +124,57 @@ export class GameUiComponent implements OnInit {
   }
     
   throwPokeball() {
+    this.gameService.getTrainer().subscribe(
+      (response) => {
+        this.pokeResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
 
+        console.log(this.pcResponse.value)
+        this.pcArray.push(this.pcResponse.value.pc)
+        this.pc = this.pcResponse.value
+        console.log(this.pc)
+        this.pc.push(this.pokeResponse.value.current_pokemon)
+        this.gameService.addPokemonToPc(this.pokeResponse.value.id, this.pc).subscribe()
+        // this.pokemonToPcResponse.next(res)
+      }
+    )
+  }
+
+  zoneTest(){
+    this.gameService.getTrainer().subscribe(
+      (response) => { 
+        this.pokeResponse.next(response);
+        console.log(this.pokeResponse.value.id)
+      },
+      (error: any) => console.log(error),
+      () => {
+        this.pcResponse.next(JSON.parse(this.pokeResponse.value.poke_party))
+        
+        console.log(this.pcResponse)
+        this.pcArray.push(this.pcResponse.value)
+        this.pc = this.pcResponse.value
+        console.log(this.pc)
+        // this.pc.push('2')
+        // console.log(this.pokeResponse)
+        
+        console.log(this.pc)
+        this.gameService.addPokemonToPc(this.pokeResponse.value.id,this.pc).subscribe(
+
+        )
+        // console.log(this.pcArray[0])
+       
+        // this.gameService.getZoneData(4)
+        
+        // console.log(this.catchingPokemon)
+        // this.catchingPokemon = true;
+        // console.log(this.catchingPokemon)
+        // window.location.reload()
+
+      }
+    );
+    
   }
 
   onGetZone() {
@@ -150,40 +201,7 @@ export class GameUiComponent implements OnInit {
 )
 }
 
-  zoneTest(){
-    this.gameService.getTrainer().subscribe(
-      (response) => { 
-        this.pokeResponse.next(response);
-        console.log(this.pokeResponse.value.id)
-      },
-      (error: any) => console.log(error),
-      () => {
-        this.pcResponse.next(JSON.parse(this.pokeResponse.value.poke_party))
-        
-        console.log(this.pcResponse)
-        this.pcArray.push(this.pcResponse.value)
-        this.pc = this.pcResponse.value
-        console.log(this.pc)
-        this.pc.push('2')
-        // console.log(this.pokeResponse)
-        
-        console.log(this.pc)
-        this.gameService.addPokemonToPc(this.pokeResponse.value.id,this.pc).subscribe(
-
-        )
-        // console.log(this.pcArray[0])
-       
-        // this.gameService.getZoneData(4)
-        
-        // console.log(this.catchingPokemon)
-        // this.catchingPokemon = true;
-        // console.log(this.catchingPokemon)
-        // window.location.reload()
-
-      }
-    );
-    
-  }
+  
 
   // On Option one change player zone to  next zone
   //  then get zone data

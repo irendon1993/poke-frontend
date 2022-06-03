@@ -13,7 +13,7 @@
     <div class="text">A wild {{this.wildPokemonResponse.value.name}} appeared</div>
     <img class="poke-pic" src={{this.pokemonToCatch.value}}>
     <div class="option-buttons" class="btn-grid" *ngIf="catchingPokemon">
-      <button class="btn">Throw a Pokeball</button>
+      <button class="btn" (click)="throwPokeball()">Throw a Pokeball</button>
       <button class="btn" (click)="reload()">Go Back</button>
 
     </div>
