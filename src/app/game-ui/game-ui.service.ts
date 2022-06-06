@@ -69,12 +69,24 @@ export class GameUiService {
 
   constructor(private http: HttpClient) { }
 
+  newGame(newName: any) :Observable<Trainer> {
+    return this.http.post<Trainer>(`${this.apiUrl}/master/create_master`,{"name": newName})
+  }
+
+  updateActiveTrainer(trainer:any): Observable<Trainer>{
+    return this.http.put<Trainer>(`${this.apiUrl}/game2/1/update_trainer`, {trainer})
+  }
+
+  getLastTrainer(): Observable<Trainer> {
+    return this.http.get<Trainer>(`${this.apiUrl}/master/last`)
+  }
+
   getPokemon(id: number): Observable<Pokemon> {
     return this.http.get<Pokemon>(`${this.apiUrl}/pokemon/${id}`)
   }
 
   getTrainer() {
-    return this.http.get<Trainer>(`${this.apiUrl}/master/9`)
+    return this.http.get<Trainer>(`${this.apiUrl}/master/find/9`)
   }
 
   getZone(): Observable<Zone>  {
@@ -85,6 +97,10 @@ export class GameUiService {
     return this.http.get<Zone>(`${this.apiUrl}/game2/1`)
   }
 
+  setGameState(state :any): Observable<Zone> {
+    return this.http.put<Zone>(`${this.apiUrl}/game2/1/update_state`, {state} )
+  }
+
   getZoneData(id: any): Observable<Zone> {
     return this.http.get<Zone>(`${this.apiUrl}/zone/${id}`)
   }
@@ -92,7 +108,6 @@ export class GameUiService {
   changeZoneState(id: number, zoneId: number): Observable<Zone>{
     return this.http.put<Zone>(`${this.apiUrl}/master/${id}/zone_update`, {"zone": `${zoneId}`},  this.httpOptions)
   }
-  
   
   changeCurrentPokemon(id: number, pokemonId: number): Observable<Pokemon>{
     return this.http.put<Pokemon>(`${this.apiUrl}/master/${id}/pokemon_update`, {"pokemon": `${pokemonId}`},  this.httpOptions)

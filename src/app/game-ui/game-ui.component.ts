@@ -23,17 +23,21 @@ export class GameUiComponent implements OnInit {
 
   
   
+  trainerResponse: BehaviorSubject<any> = new BehaviorSubject({});
   directionsResponse: BehaviorSubject<any> = new BehaviorSubject({});
   directions:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   
-  trainerResponse: BehaviorSubject<any> = new BehaviorSubject({});
   picArray:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   
-
+  trainerName = '';
   traveling = false;
+  catching = false;
   newGame = true;
   gameOver = false;
   pokeBalls = 2;
+  
+  newTrainerResponse: BehaviorSubject<any> = new BehaviorSubject({});
+  
 
   wildPokemonResponse: BehaviorSubject<any> = new BehaviorSubject({});
   wildPokemon:BehaviorSubject<any> = new BehaviorSubject<any>([]);
@@ -71,7 +75,35 @@ export class GameUiComponent implements OnInit {
     // this.zoneTest();
     // this.onOptionOne();
   }
-
+ 
+  startOver() {
+    this.gameService.setGameState(0).subscribe()
+    window.location.reload()
+  }
+  
+  onNewGame() {
+    this.gameService.newGame(this.trainerName).subscribe(
+      (response) => {
+        this.pokeResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+        this.gameService.getLastTrainer().subscribe(
+          (response) => {
+            this.newTrainerResponse.next(response);
+          },
+          (error: any) => console.log(error),
+          () => {
+            console.log(this.newTrainerResponse.value.id)
+            this.gameService.updateActiveTrainer(this.newTrainerResponse.value.id).subscribe()
+            this.gameService.setGameState(1).subscribe()
+            window.location.reload()
+            
+          }
+        )
+      }
+    )
+  }
   
 
   onGameInit() {
@@ -185,6 +217,7 @@ onGetTrainerId() {
        
           
             this.gameOver = true;
+            
           }
           
           

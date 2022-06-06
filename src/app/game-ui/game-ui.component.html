@@ -9,7 +9,7 @@
     <button class="btn">Option 4</button>
   </div>
 
-  <div class="wildPokemon" *ngIf="!traveling && !gameOver">
+  <div class="wildPokemon" *ngIf="!traveling && !gameOver && !newGame">
     <div class="text">A wild {{this.wildPokemonResponse.value.name}} appeared</div>
     <img class="poke-pic" src={{this.pokemonToCatch.value}}>
     <div class="option-buttons" class="btn-grid" *ngIf="!traveling">
@@ -21,7 +21,9 @@
   </div>
 
   <div class="newGame" *ngIf="newGame">
-    <button class="btn" (click)="onGameInit()">New Game</button>
+    <input type="text" class="" [(ngModel)]="trainerName">What is your name?
+    <button class="btn" (click)="onNewGame()">New Game</button>
+    
   </div>
 
   <div class="gameOver" *ngIf="gameOver">
@@ -29,5 +31,6 @@
         <img *ngIf="pic !='null'" src={{pic}} class="poke-pic">
       </div>
       <img src={{this.pokemonToPcResponse.value.iamgeurl}} class="poke-pic">
+      <button class="btn" (click)="startOver()">New Game</button>
   </div>
 </div>
