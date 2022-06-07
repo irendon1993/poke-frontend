@@ -100,8 +100,8 @@ export class GameUiComponent implements OnInit {
             this.gameService.updateActiveTrainer(this.newTrainerResponse.value.id).subscribe()
             this.gameService.setGameState(1).subscribe()
             this.gameService.changeZoneState(this.newTrainerResponse.value.id,4).subscribe()
-            this.gameService.addPokemonToPc(this.newTrainerResponse.value.id,[0]).subscribe()
-            this.gameService.addPcPic(this.newTrainerResponse.value.id,[0]).subscribe()
+            this.gameService.addPokemonToPc(this.newTrainerResponse.value.id,[]).subscribe()
+            this.gameService.addPcPic(this.newTrainerResponse.value.id,[]).subscribe()
             window.location.reload()
             
           }
