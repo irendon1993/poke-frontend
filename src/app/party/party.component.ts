@@ -15,10 +15,16 @@ export class PartyComponent implements OnInit {
   error: any;
   user: User| undefined;
 
-  pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  pokeParty: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
+  pokeBallImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+  pokemonCaught: any;
+  pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
+
+  trainerResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  
+  pokeParty: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   partyResponse: BehaviorSubject<any> = new BehaviorSubject({});
+  party: any;
 
   partyOne:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   partyTwo:BehaviorSubject<any> = new BehaviorSubject<any>([]);
@@ -32,66 +38,145 @@ export class PartyComponent implements OnInit {
   }
 
 onGetTrainerId(): void {
-  this.partyService.getUserId().subscribe(
+  this.partyService.getGameState().subscribe(
     (response) => { 
-    // const test = response.pokeParty
-    // console.log(test)
     this.pokeResponse.next(response);
   },
     (error: any) => console.log(error),
     () => {
-
-    this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-    this.partyService.getPokemon(this.pokeParty.value[0]).subscribe(
-   
+    
+    this.partyService.getUser(this.pokeResponse.value.active_trainer).subscribe(
       (response) => { 
-      this.partyResponse.next(response);
-    },
-
-      (error: any) => console.log(error),
-
-      () => {
-      this.partyOne.next(this.partyResponse.value.iamgeurl) 
-      // console.log(this.partyResponse.value.iamgeurl)
-      } 
-
-    );
-
-    this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-    this.partyService.getPokemon(this.pokeParty.value[1]).subscribe(
-    
-    (response) => { 
-      this.partyResponse.next(response);
-    },
-
-      (error: any) => console.log(error),
-
-      () => {
-      this.partyTwo.next(this.partyResponse.value.iamgeurl) 
-      // console.log(this.partyResponse.value.iamgeurl)
-      } 
-
-    );
-
-    this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-    this.partyService.getPokemon(this.pokeParty.value[2]).subscribe(
-    
-    (response) => { 
-      this.partyResponse.next(response);
-    },
-
-      (error: any) => console.log(error),
-
-      () => {
-      this.partyThree.next(this.partyResponse.value.iamgeurl) 
-      // console.log(this.partyResponse.value.iamgeurl)
-      } 
-    
-    );
-    
-    },
-  );
+        
+      this.trainerResponse.next(response);
+      },
+        (error: any) => console.log(error),
+        () => {
+          this.partyResponse.next(JSON.parse(this.trainerResponse.value.pic_array))
+          this.party = this.partyResponse.value
+          console.log(this.party)
+          if(this.party[0] == 0) {
+            this.party.shift()
+          }
+          console.log(this.party.length)
+          this.pokemonCaught = this.party.length
+          
+          
+          if(this.pokemonCaught == 1) {
+            this.partyService.getPokemon(this.partyResponse.value[0]).subscribe(
+              (response) => { 
+                this.pokeParty.next(response);
+              },
+                (error: any) => console.log(error),
+                () => {
+                  this.partyOne.next(this.pokeParty.value.iamgeurl)
+                }
+            )
+          } else if (this.pokemonCaught == 2) {
+              this.partyService.getPokemon(this.partyResponse.value[0]).subscribe(
+                (response) => { 
+                  this.pokeParty.next(response);
+                },
+                  (error: any) => console.log(error),
+                  () => {
+                    this.partyOne.next(this.pokeParty.value.iamgeurl)
+                    this.partyService.getPokemon(this.partyResponse.value[1]).subscribe(
+                      (response) => { 
+                        this.pokeParty.next(response);
+                      },
+                        (error: any) => console.log(error),
+                        () => {
+                          this.partyTwo.next(this.pokeParty.value.iamgeurl)
+                        }
+                    )
+                  }
+              )
+            } else if(this.pokemonCaught >= 3) {
+              this.partyService.getPokemon(this.partyResponse.value[0]).subscribe(
+                (response) => { 
+                  this.pokeParty.next(response);
+                },
+                  (error: any) => console.log(error),
+                  () => {
+                    this.partyOne.next(this.pokeParty.value.iamgeurl)
+                    this.partyService.getPokemon(this.partyResponse.value[1]).subscribe(
+                      (response) => { 
+                        this.pokeParty.next(response);
+                      },
+                        (error: any) => console.log(error),
+                        () => {
+                          this.partyTwo.next(this.pokeParty.value.iamgeurl)
+                          this.partyService.getPokemon(this.partyResponse.value[2]).subscribe(
+                            (response) => { 
+                              this.pokeParty.next(response);
+                            },
+                              (error: any) => console.log(error),
+                              () => {
+                                this.partyThree.next(this.pokeParty.value.iamgeurl)
+                                
+                              }
+                          )
+                        }
+                    )
+                  }
+              )
+            }   
+          } 
+    )
+    }
+  )
 }
+//     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
+//     this.partyService.getPokemon(this.pokeParty.value[0]).subscribe(
+   
+//       (response) => { 
+//       this.partyResponse.next(response);
+//     },
+
+//       (error: any) => console.log(error),
+
+//       () => {
+//       this.partyOne.next(this.partyResponse.value.iamgeurl) 
+//       // console.log(this.partyResponse.value.iamgeurl)
+//       } 
+
+//     );
+
+//     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
+//     this.partyService.getPokemon(this.pokeParty.value[1]).subscribe(
+    
+//     (response) => { 
+//       this.partyResponse.next(response);
+//     },
+
+//       (error: any) => console.log(error),
+
+//       () => {
+//       this.partyTwo.next(this.partyResponse.value.iamgeurl) 
+//       // console.log(this.partyResponse.value.iamgeurl)
+//       } 
+
+//     );
+
+//     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
+//     this.partyService.getPokemon(this.pokeParty.value[2]).subscribe(
+    
+//     (response) => { 
+//       this.partyResponse.next(response);
+//     },
+
+//       (error: any) => console.log(error),
+
+//       () => {
+//       this.partyThree.next(this.partyResponse.value.iamgeurl) 
+//       // console.log(this.partyResponse.value.iamgeurl)
+//       } 
+    
+//     );
+    
+//     },
+//   );
+// }
 
 
 // onGetPokemon(): void {

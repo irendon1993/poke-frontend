@@ -12,6 +12,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export class GameUiComponent implements OnInit {
 
+  gameResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
   pokeResponse: BehaviorSubject<any> = new BehaviorSubject<any>({});
   party:BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
@@ -35,6 +36,7 @@ export class GameUiComponent implements OnInit {
   newGame = true;
   gameOver = false;
   pokeBalls = 2;
+  pokeBallImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
   
   newTrainerResponse: BehaviorSubject<any> = new BehaviorSubject({});
   
@@ -71,7 +73,7 @@ export class GameUiComponent implements OnInit {
   ngOnInit(): void {
     this.onGameInit();
     this.onGetZone();
-    this.onGetTrainerId();
+    // this.onGetTrainerId();
     // this.zoneTest();
     // this.onOptionOne();
   }
@@ -94,9 +96,12 @@ export class GameUiComponent implements OnInit {
           },
           (error: any) => console.log(error),
           () => {
-            console.log(this.newTrainerResponse.value.id)
+            // console.log(this.newTrainerResponse.value.id)
             this.gameService.updateActiveTrainer(this.newTrainerResponse.value.id).subscribe()
             this.gameService.setGameState(1).subscribe()
+            this.gameService.changeZoneState(this.newTrainerResponse.value.id,4).subscribe()
+            this.gameService.addPokemonToPc(this.newTrainerResponse.value.id,[0]).subscribe()
+            this.gameService.addPcPic(this.newTrainerResponse.value.id,[0]).subscribe()
             window.location.reload()
             
           }
@@ -113,9 +118,7 @@ export class GameUiComponent implements OnInit {
       },
       (error: any) => console.log(error),
       () => {
-            console.log(this.pokeResponse.value.game_state)
             this.newGame = this.pokeResponse.value.game_state;
-            console.log(this.newGame)
             if(this.pokeResponse.value.game_state == 1) {
               this.newGame = false;
               this.traveling = true;
@@ -126,16 +129,24 @@ export class GameUiComponent implements OnInit {
   }
 
 onGetTrainerId() {
-  this.gameService.getTrainer().subscribe(
+  this.gameService.getGameState().subscribe(
+    (response) => {
+      this.pokeResponse.next(response);
+    },
+    (error: any) => console.log(error),
+    () => {
+    this.gameService.getTrainer(this.pokeResponse.value.active_trainer).subscribe(
     (response) => {
       this.trainerResponse.next(response);
     },
     (error: any) => console.log(error),
     () => {
-      console.log(this.trainerResponse.value.pic_array)
+      // console.log(this.trainerResponse.value.pic_array)
       this.picArray.next(JSON.parse(this.trainerResponse.value.pic_array))
-      console.log(this.picArray.value)
+      // console.log(this.picArray.value)
     }
+  )
+}
   )
 }
 
@@ -156,7 +167,13 @@ onGetTrainerId() {
       this.traveling = false;
     }
 
-    this.gameService.getTrainer().subscribe(
+    this.gameService.getGameState().subscribe(
+      (response) => {
+        this.pokeResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+      this.gameService.getTrainer(this.pokeResponse.value.active_trainer).subscribe(
 
       (response) => {
         this.pokeResponse.next(response);
@@ -179,8 +196,8 @@ onGetTrainerId() {
               (response) => {
                 
                 this.wildPokemonResponse.next(response);
-                console.log(this.wildPokemonResponse.value.id)
-                console.log(this.pokeResponse.value.id)
+                // console.log(this.wildPokemonResponse.value.id)
+                // console.log(this.pokeResponse.value.id)
               },
               (error: any) => console.log(error),
               () => {
@@ -194,9 +211,18 @@ onGetTrainerId() {
         }
     )
   }
+    )
+}
     
   throwPokeball() {
-    this.gameService.getTrainer().subscribe(
+    this.gameService.getGameState().subscribe(
+      (response) => {
+        this.gameResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+      // console.log(this.gameResponse.value)
+      this.gameService.getTrainer(this.gameResponse.value.active_trainer).subscribe(
       (response) => {
         this.pokeResponse.next(response);
       },
@@ -206,21 +232,14 @@ onGetTrainerId() {
         this.pc = JSON.parse(this.pokeResponse.value.pc)
         console.log(this.pc)
         this.pc.push(this.pokeResponse.value.current_pokemon)
-        console.log(this.pokeResponse.value.current_pokemon)
-        console.log(this.pc.length)
         this.pokeBalls --
-        console.log(this.pc)
-        
         
         if(this.pokeBalls === 0) {
 
-       
-          
             this.gameOver = true;
             
           }
-          
-          
+
         else {
           
           this.gameService.getPokemon(this.pokeResponse.value.current_pokemon).subscribe(
@@ -229,15 +248,25 @@ onGetTrainerId() {
                   },
                   (error: any) => console.log(error),
                   () => {
+
                     // console.log(this.pokemonToPcResponse.value.iamgeurl)
 
                     this.pics = JSON.parse(this.pokeResponse.value.pic_array);
                     // this.pics.push(this.pokeResponse.value.current_pokemon)
                     this.pics.push(this.pokemonToPcResponse.value.iamgeurl)
-                    console.log(this.pics)
 
+                    if(this.pics[0] == 0) {
+                      this.pics.shift();
+                      console.log(this.pics)
+                      this.gameService.addPcPic(this.pokeResponse.value.id, this.pics).subscribe()
+                      this.gameService.addPokemonToPc(this.pokeResponse.value.id, this.pc).subscribe()
+                    } else {
+
+                    console.log(this.pics)
                     this.gameService.addPcPic(this.pokeResponse.value.id, this.pics).subscribe()
                     this.gameService.addPokemonToPc(this.pokeResponse.value.id, this.pc).subscribe()
+                    }
+                    
                   }
                 
           )
@@ -247,12 +276,20 @@ onGetTrainerId() {
        
       }
     )
+    
   }
-
+    )
+}
   
 
   onGetZone() {
-    this.gameService.getTrainer().subscribe(
+    this.gameService.getGameState().subscribe(
+      (response) => {
+        this.gameResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+      this.gameService.getTrainer(this.gameResponse.value.active_trainer).subscribe(
       
       (response) => {
         this.pokeResponse.next(response);
@@ -268,11 +305,13 @@ onGetTrainerId() {
           (error: any) => console.log(error),
           () => {
             this.directions.next(JSON.parse(this.directionsResponse.value.directions))
-            console.log(this.zone.value)
+            // console.log(this.zone.value)
             } 
         ) 
   },
 )
+      }
+    )
 }
 
   
@@ -281,7 +320,13 @@ onGetTrainerId() {
   //  then get zone data
   onOptionOne(): void {
     // On submit update trainer zone
-    this.gameService.getTrainer().subscribe(
+    this.gameService.getGameState().subscribe(
+      (response) => {
+        this.gameResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+      this.gameService.getTrainer(this.gameResponse.value.active_trainer).subscribe(
 
       (response) => {
         this.pokeResponse.next(response);
@@ -329,4 +374,6 @@ onGetTrainerId() {
 
     )
   }
+    )
+}
 }

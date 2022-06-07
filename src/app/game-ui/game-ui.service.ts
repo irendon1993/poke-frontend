@@ -85,8 +85,8 @@ export class GameUiService {
     return this.http.get<Pokemon>(`${this.apiUrl}/pokemon/${id}`)
   }
 
-  getTrainer() {
-    return this.http.get<Trainer>(`${this.apiUrl}/master/find/9`)
+  getTrainer(id: number) {
+    return this.http.get<Trainer>(`${this.apiUrl}/master/find/${id}`)
   }
 
   getZone(): Observable<Zone>  {

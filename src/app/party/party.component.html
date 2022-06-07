@@ -1,11 +1,36 @@
 <div class="player">
   <img class="trainer-picture" src="https://i.imgur.com/7aP7beL.png">
 </div>
-<div class="party">
+<div *ngIf="pokemonCaught == 0" class="party">
   <ul class="party-list">
-    <li class="poke-list-item"><img class="poke-pic" src={{this.partyOne.value}}></li>
-    <li class="poke-list-item"><img class="poke-pic" src={{this.partyTwo.value}}></li>
+    <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
+    <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
+    <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
+  </ul>
+</div>
+
+<div *ngIf="pokemonCaught == 1" class="party">
+  <ul class="party-list">
+    <li class="poke-list-item"><img class="poke-pic" src={{this.partyOne.value}}></li> 
+    <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
+    <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
+  </ul>
+</div>
+<div *ngIf="pokemonCaught == 2" class="party">
+  <ul class="party-list">
+    <li class="poke-list-item"><img class="poke-pic" src={{this.partyOne.value}}></li> 
+    <li class="poke-list-item"><img class="poke-pic" src={{this.partyTwo.value}} ></li>
+    <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
+  </ul>
+</div>
+
+<div *ngIf="pokemonCaught >= 3" class="party">
+  <ul class="party-list">
+    <li class="poke-list-item"><img class="poke-pic" src={{this.partyOne.value}}></li> 
+    <li class="poke-list-item"><img class="poke-pic" src={{this.partyTwo.value}} ></li>
     <li class="poke-list-item"><img class="poke-pic" src={{this.partyThree.value}}></li>
   </ul>
 </div>
+
+
 <!-- <div>{{pokeParty.value}}</div> -->

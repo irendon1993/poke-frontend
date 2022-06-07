@@ -27,6 +27,12 @@ export interface Pokemon {
 
 }
 
+export interface Zone {
+  id?: number;
+  wildPokemon?: string[];
+ 
+}
+
 // export interface Response {
 //   id: number;
 //   name: string;
@@ -51,8 +57,12 @@ export class PartyService {
     return this.http.get<Pokemon>(`${this.apiUrl}/pokemon/${id}`)
   }
 
-  getUserId(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/master/find/6`)
+  getUser(id: any): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/master/find/${id}`)
+  }
+
+  getGameState(): Observable<Zone>  {
+    return this.http.get<Zone>(`${this.apiUrl}/game2/1`)
   }
 
   // getPokemon(): Observable<Pokemon> {
