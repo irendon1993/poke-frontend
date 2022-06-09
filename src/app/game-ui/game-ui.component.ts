@@ -35,7 +35,7 @@ export class GameUiComponent implements OnInit {
   catching = false;
   newGame = true;
   gameOver = false;
-  pokeBalls = 2;
+  pokeBalls= 0;
   
   newTrainerResponse: BehaviorSubject<any> = new BehaviorSubject({});
   
@@ -89,6 +89,7 @@ export class GameUiComponent implements OnInit {
       },
       (error: any) => console.log(error),
       () => {
+        this.gameService.setGameState(1).subscribe()
         this.gameService.getLastTrainer().subscribe(
           (response) => {
             this.newTrainerResponse.next(response);
@@ -97,11 +98,10 @@ export class GameUiComponent implements OnInit {
           () => {
             // console.log(this.newTrainerResponse.value.id)
             this.gameService.updateActiveTrainer(this.newTrainerResponse.value.id).subscribe()
-            this.gameService.setGameState(1).subscribe()
             this.gameService.changeZoneState(this.newTrainerResponse.value.id,4).subscribe()
+            this.gameService.setPokeballs(this.newTrainerResponse.value.id,3).subscribe()
             this.gameService.addPokemonToPc(this.newTrainerResponse.value.id,[]).subscribe()
             this.gameService.addPcPic(this.newTrainerResponse.value.id,[]).subscribe()
-            this.gameService.setPokeballs(this.newTrainerResponse.value.id,3).subscribe()
             window.location.reload()
             
           }
@@ -228,19 +228,25 @@ onGetTrainerId() {
       },
       (error: any) => console.log(error),
       () => {
-        console.log(this.pokeResponse.value)
-        this.pc = JSON.parse(this.pokeResponse.value.pc)
-        console.log(this.pc)
-        this.pc.push(this.pokeResponse.value.current_pokemon)
-        this.pokeBalls --
         
-        if(this.pokeBalls === 0) {
+        this.pokeBalls = this.pokeResponse.value.pokeballs
+        // this.pokeBalls = this.pokeBalls.toInt();
+        console.log(this.pokeResponse.value)
+        console.log(this.pokeBalls)
+        this.gameService.setPokeballs(this.pokeResponse.value.id,this.pokeBalls-1).subscribe()
+        console.log(this.pokeBalls)
+        if(this.pokeBalls <= 0) {
 
             this.gameOver = true;
             
           }
 
         else {
+          console.log(this.pokeResponse.value)
+          this.pc = JSON.parse(this.pokeResponse.value.pc)
+          // console.log(this.pc)
+          this.pc.push(this.pokeResponse.value.current_pokemon)
+          
           
           this.gameService.getPokemon(this.pokeResponse.value.current_pokemon).subscribe(
             (response) => {
@@ -257,12 +263,12 @@ onGetTrainerId() {
 
                     if(this.pics[0] == 0) {
                       this.pics.shift();
-                      console.log(this.pics)
+                      // console.log(this.pics)
                       this.gameService.addPcPic(this.pokeResponse.value.id, this.pics).subscribe()
                       this.gameService.addPokemonToPc(this.pokeResponse.value.id, this.pc).subscribe()
                     } else {
 
-                    console.log(this.pics)
+                    // console.log(this.pics)
                     this.gameService.addPcPic(this.pokeResponse.value.id, this.pics).subscribe()
                     this.gameService.addPokemonToPc(this.pokeResponse.value.id, this.pc).subscribe()
                     }
