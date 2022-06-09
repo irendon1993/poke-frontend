@@ -236,9 +236,9 @@ onGetTrainerId() {
         this.gameService.setPokeballs(this.pokeResponse.value.id,this.pokeBalls-1).subscribe()
         console.log(this.pokeBalls)
         if(this.pokeBalls <= 0) {
-
+          this.pics = JSON.parse(this.pokeResponse.value.pic_array);
             this.gameOver = true;
-            
+            console.log(this.pics)
           }
 
         else {
