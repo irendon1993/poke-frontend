@@ -79,6 +79,7 @@ export class GameUiComponent implements OnInit {
  
   startOver() {
     this.gameService.setGameState(0).subscribe()
+    this.gameService.updateActiveTrainer(0).subscribe()
     window.location.reload()
   }
   

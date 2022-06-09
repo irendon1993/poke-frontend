@@ -1,7 +1,7 @@
 <div class="player">
   <img class="trainer-picture" src="https://i.imgur.com/7aP7beL.png">
 </div>
-<div *ngIf="pokemonCaught == 0" class="party">
+<div *ngIf="!pokemonCaught || pokemonCaught == 0" class="party">
   <ul class="party-list">
     <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
     <li class="poke-list-item"><img class="poke-pic" src={{this.pokeBallImage}}></li>
