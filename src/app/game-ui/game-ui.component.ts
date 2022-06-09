@@ -101,8 +101,6 @@ export class GameUiComponent implements OnInit {
             this.gameService.updateActiveTrainer(this.newTrainerResponse.value.id).subscribe()
             this.gameService.changeZoneState(this.newTrainerResponse.value.id,4).subscribe()
             this.gameService.setPokeballs(this.newTrainerResponse.value.id,3).subscribe()
-            this.gameService.addPokemonToPc(this.newTrainerResponse.value.id,[]).subscribe()
-            this.gameService.addPcPic(this.newTrainerResponse.value.id,[]).subscribe()
             window.location.reload()
             
           }
@@ -125,9 +123,44 @@ export class GameUiComponent implements OnInit {
               this.traveling = true;
             }
             
+            this.gameService.addPokemonToPc(this.pokeResponse.value.active_trainer,[]).subscribe()
+            this.gameService.addPcPic(this.pokeResponse.value.active_trainer,[]).subscribe()
+            console.log(this.pokeResponse.value)
            }
     )
   }
+  onGetZone() {
+    this.gameService.getGameState().subscribe(
+      (response) => {
+        this.gameResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+      this.gameService.getTrainer(this.gameResponse.value.active_trainer).subscribe(
+      
+      (response) => {
+        this.pokeResponse.next(response);
+      },
+      (error: any) => console.log(error),
+      () => {
+        this.zone.next(JSON.parse(this.pokeResponse.value.currentZone))
+        this.gameService.getZoneData(this.zone.value).subscribe(
+          
+          (response) => { 
+            this.directionsResponse.next(response);
+          },
+          (error: any) => console.log(error),
+          () => {
+            this.directions.next(JSON.parse(this.directionsResponse.value.directions))
+            // console.log(this.zone.value)
+            } 
+        ) 
+  },
+)
+      }
+    )
+}
+
 
 onGetTrainerId() {
   this.gameService.getGameState().subscribe(
@@ -289,37 +322,6 @@ onGetTrainerId() {
 }
   
 
-  onGetZone() {
-    this.gameService.getGameState().subscribe(
-      (response) => {
-        this.gameResponse.next(response);
-      },
-      (error: any) => console.log(error),
-      () => {
-      this.gameService.getTrainer(this.gameResponse.value.active_trainer).subscribe(
-      
-      (response) => {
-        this.pokeResponse.next(response);
-      },
-      (error: any) => console.log(error),
-      () => {
-        this.zone.next(JSON.parse(this.pokeResponse.value.currentZone))
-        this.gameService.getZoneData(this.zone.value).subscribe(
-          
-          (response) => { 
-            this.directionsResponse.next(response);
-          },
-          (error: any) => console.log(error),
-          () => {
-            this.directions.next(JSON.parse(this.directionsResponse.value.directions))
-            // console.log(this.zone.value)
-            } 
-        ) 
-  },
-)
-      }
-    )
-}
 
   
 
