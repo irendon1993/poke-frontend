@@ -1,15 +1,13 @@
 <div class="container">
   <div id="text" *ngIf="traveling">What will you do?</div>
   <div id="option-buttons" class="btn-grid" *ngIf="traveling">
-    <button class="btn" (click)="onOptionOne()">{{this.directions.value[0]}}</button>
-    <!-- <button class="btn" (click)="onOptionOne()">{{this.directions.value[1]}}</button>
-    <button class="btn" (click)="onOptionOne()">{{this.directions.value[2]}}</button> -->
-    <button class="btn" (click)="onGameInit()">Option 2</button>
+    <button *ngIf="this.directions.value[0] && this.directions.value[0] != 0" class="btn" (click)="onOptionOne()">{{this.directions.value[0]}}</button>
+    <button *ngIf="this.directions.value[1]" class="btn" (click)="onOptionOne()">{{this.directions.value[1]}}</button>
+    <button *ngIf="this.directions.value[2]" class="btn" (click)="onOptionOne()">{{this.directions.value[2]}}</button>
     <button class="btn" (click)="catchPokemon()">Catch a pokemon</button>
-    <button class="btn">Option 4</button>
   </div>
 
-  <div class="wildPokemon" *ngIf="!traveling && !gameOver && !newGame">
+  <div class="wildPokemon" *ngIf="!traveling && !gameOver && !newGame && !inCenter">
     <div class="text">A wild {{this.wildPokemonResponse.value.name}} appeared</div>
     <img class="poke-pic" src={{this.pokemonToCatch.value}}>
     <div class="option-buttons" class="btn-grid" *ngIf="!traveling">
@@ -25,6 +23,14 @@
     <button class="btn" (click)="onNewGame()">New Game</button>
     
   </div>
+
+  <div class="newGame" *ngIf="inCenter">
+    <div id="text">In the Safari Zone you'll encounter hundreds of pokemon, but you only have 20 pokeballs so use them wisely!</div>
+    <button class="btn" (click)="enterZone()">Enter the Safari Zone</button>
+    
+  </div>
+
+
 
   <div class="gameOver" *ngIf="gameOver">
       <div *ngFor="let pic of this.pics">
