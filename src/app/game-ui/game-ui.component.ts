@@ -66,7 +66,8 @@ export class GameUiComponent implements OnInit {
   inCenter = false;
   gameOver = false;
   pokeBalls= 0;
-  
+  randomCaught = 100;
+  gameText = '';
   
   
   
@@ -298,11 +299,11 @@ onGetTrainerId() {
       },
       (error: any) => console.log(error),
       () => {
-        
+        this.randomCaught = this.getRandomInt(100)
         this.pokeBalls = this.pokeballThrownResponse.value.pokeballs
         // this.pokeBalls = this.pokeBalls.toInt();
-        console.log(this.pokeballThrownResponse.value)
-        console.log(this.pokeBalls)
+        // console.log(this.pokeballThrownResponse.value)
+        // console.log(this.pokeBalls)
         this.gameService.setPokeballs(this.pokeballThrownResponse.value.id,this.pokeBalls-1).subscribe()
         console.log(this.pokeBalls)
         if(this.pokeBalls <= 0) {
@@ -310,9 +311,14 @@ onGetTrainerId() {
             this.gameOver = true;
             console.log(this.pics)
           }
+        else if(this.pokeBalls > 0 && this.randomCaught < 61) {
+          console.log(this.randomCaught)
 
-        else {
+        }
+
+        else if (this.randomCaught > 61){
           console.log(this.pokeballThrownResponse.value)
+          console.log(this.randomCaught)
           this.pc = JSON.parse(this.pokeballThrownResponse.value.pc)
           // console.log(this.pc)
           this.pc.push(this.pokeballThrownResponse.value.current_pokemon)
@@ -341,6 +347,8 @@ onGetTrainerId() {
                     // console.log(this.pics)
                     this.gameService.addPcPic(this.pokeballThrownResponse.value.id, this.pics).subscribe()
                     this.gameService.addPokemonToPc(this.pokeballThrownResponse.value.id, this.pc).subscribe()
+                    this.traveling = true;
+                    window.location.reload()
                     }
                     
                   }
