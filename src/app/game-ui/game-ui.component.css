@@ -52,3 +52,14 @@
   justify-content: center;
   
 }
+
+.pcPic {
+  width: 30%;
+  height: 75%;
+  border-radius: 50%;
+  background-color: #EAE2B7;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10%;
+  /* padding: 0 2% 0 2%; */
+}
