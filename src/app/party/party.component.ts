@@ -53,7 +53,7 @@ onGetTrainerId(): void {
         (error: any) => console.log(error),
         () => {
           console.log(this.trainerResponse.value)
-          this.partyResponse.next(JSON.parse(this.trainerResponse.value.pic_array))
+          this.partyResponse.next(this.trainerResponse.value.pic_array)
           this.party = this.partyResponse.value
           console.log(this.party)
           if(this.party[0] == 0) {
@@ -79,75 +79,4 @@ onGetTrainerId(): void {
      } 
    ) 
 }
-//     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-//     this.partyService.getPokemon(this.pokeParty.value[0]).subscribe(
-   
-//       (response) => { 
-//       this.partyResponse.next(response);
-//     },
-
-//       (error: any) => console.log(error),
-
-//       () => {
-//       this.partyOne.next(this.partyResponse.value.iamgeurl) 
-//       // console.log(this.partyResponse.value.iamgeurl)
-//       } 
-
-//     );
-
-//     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-//     this.partyService.getPokemon(this.pokeParty.value[1]).subscribe(
-    
-//     (response) => { 
-//       this.partyResponse.next(response);
-//     },
-
-//       (error: any) => console.log(error),
-
-//       () => {
-//       this.partyTwo.next(this.partyResponse.value.iamgeurl) 
-//       // console.log(this.partyResponse.value.iamgeurl)
-//       } 
-
-//     );
-
-//     this.pokeParty.next(JSON.parse(this.pokeResponse.value.poke_party)) 
-//     this.partyService.getPokemon(this.pokeParty.value[2]).subscribe(
-    
-//     (response) => { 
-//       this.partyResponse.next(response);
-//     },
-
-//       (error: any) => console.log(error),
-
-//       () => {
-//       this.partyThree.next(this.partyResponse.value.iamgeurl) 
-//       // console.log(this.partyResponse.value.iamgeurl)
-//       } 
-    
-//     );
-    
-//     },
-//   );
-// }
-
-
-// onGetPokemon(): void {
-// this.partyService.getPokemon(this.pokeParty.value[0]).subscribe(
-//   (response) => { 
-//   const test = response.iamgeurl
-//   console.log(test)
-//   console.log(response)
-//   this.partyResponse.next(response);
-// },
-//   (error: any) => console.log(error),
-//   () => {
-//   this.iamgeurl.next(JSON.parse(this.partyResponse.value.iamgeurl)) 
-//   // console.log(this.pokeParty.value)
-//   console.log(this.pokeParty.value[0])
-//   } 
-// );
-// }
-
-
 }

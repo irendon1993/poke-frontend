@@ -110,7 +110,7 @@ export class GameUiService {
   // Zone State
   
   getZoneData(id: any): Observable<Zone> {
-    return this.http.get<Zone>(`${this.apiUrl}/zone/${id}`)
+    return this.http.get<Zone>(`${this.apiUrl}/zones/${id}`)
   }
   
   // Update PC

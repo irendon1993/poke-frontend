@@ -135,8 +135,8 @@ export class GameUiComponent implements OnInit {
             // console.log(this.newTrainerResponse.value.id)
             
             this.gameService.updateActiveTrainer(this.newTrainerResponse.value.id).subscribe()
-            this.gameService.changeZoneState(this.newTrainerResponse.value.id,4).subscribe()
-            this.gameService.setPokeballs(this.newTrainerResponse.value.id,3).subscribe()
+            this.gameService.changeZoneState(this.newTrainerResponse.value.id,8).subscribe()
+            this.gameService.setPokeballs(this.newTrainerResponse.value.id,20).subscribe()
             this.newGame = false;
             this.inCenter = true;
             
@@ -159,6 +159,7 @@ export class GameUiComponent implements OnInit {
             if(this.gameInitResponse.value.game_state == 1) {
               this.newGame = false;
               this.traveling = true;
+              console.log(this.traveling)
             }
             
             
@@ -180,7 +181,8 @@ export class GameUiComponent implements OnInit {
       },
       (error: any) => console.log(error),
       () => {
-        this.zone.next(JSON.parse(this.zoneSetResponse.value.currentZone))
+        console.log(this.zoneSetResponse.value.currentZone)
+        this.zone.next(this.zoneSetResponse.value.currentZone)
         this.gameService.getZoneData(this.zone.value).subscribe(
           
           (response) => { 
@@ -188,7 +190,7 @@ export class GameUiComponent implements OnInit {
           },
           (error: any) => console.log(error),
           () => {
-            this.directions.next(JSON.parse(this.directionsResponse.value.directions))
+            this.directions.next(this.directionsResponse.value.directions)
             // console.log(this.zone.value)
             } 
         ) 
@@ -213,7 +215,7 @@ onGetTrainerId() {
     (error: any) => console.log(error),
     () => {
       // console.log(this.trainerResponse.value.pic_array)
-      this.picArray.next(JSON.parse(this.trainerResponse.value.pic_array))
+      this.picArray.next(this.trainerResponse.value.pic_array)
       // console.log(this.picArray.value)
     }
   )
@@ -251,7 +253,7 @@ onGetTrainerId() {
       },
       (error: any) => console.log(error),
       () => {
-        this.zone.next(JSON.parse(this.catchPokemonResponse.value.currentZone))
+        this.zone.next(this.catchPokemonResponse.value.currentZone)
         this.gameService.getZoneData(this.zone.value).subscribe(
           
           (response) => { 
@@ -259,7 +261,7 @@ onGetTrainerId() {
           },
           (error: any) => console.log(error),
           () => {
-            this.wildPokemon.next(JSON.parse(this.zoneResponse.value.wild_pokemon));
+            this.wildPokemon.next(this.zoneResponse.value.wild_pokemon);
             this.randomWildPokemon = this.getRandomInt(this.wildPokemon.value.length)
            
 
@@ -307,7 +309,7 @@ onGetTrainerId() {
         this.gameService.setPokeballs(this.pokeballThrownResponse.value.id,this.pokeBalls-1).subscribe()
         console.log(this.pokeBalls)
         if(this.pokeBalls <= 0) {
-          this.pics = JSON.parse(this.pokeballThrownResponse.value.pic_array);
+          this.pics = this.pokeballThrownResponse.value.pic_array;
             this.gameOver = true;
             console.log(this.pics)
           }
@@ -319,7 +321,7 @@ onGetTrainerId() {
         else if (this.randomCaught > 61){
           console.log(this.pokeballThrownResponse.value)
           console.log(this.randomCaught)
-          this.pc = JSON.parse(this.pokeballThrownResponse.value.pc)
+          this.pc = this.pokeballThrownResponse.value.pc
           // console.log(this.pc)
           this.pc.push(this.pokeballThrownResponse.value.current_pokemon)
           
@@ -333,7 +335,7 @@ onGetTrainerId() {
 
                     // console.log(this.pokemonToPcResponse.value.iamgeurl)
 
-                    this.pics = JSON.parse(this.pokeballThrownResponse.value.pic_array);
+                    this.pics = this.pokeballThrownResponse.value.pic_array;
                     // this.pics.push(this.pokeResponse.value.current_pokemon)
                     this.pics.push(this.pokemonToPcResponse.value.iamgeurl)
 
@@ -386,7 +388,7 @@ onGetTrainerId() {
       },
       (error: any) => console.log(error),
       () => {
-        this.zone.next(JSON.parse(this.optionOnePressedResponse.value.currentZone))
+        this.zone.next(this.optionOnePressedResponse.value.currentZone)
         this.gameService.getZoneData(this.zone.value).subscribe(
           
           (response) => { 
@@ -394,7 +396,7 @@ onGetTrainerId() {
           },
           (error: any) => console.log(error),
           () => {
-            this.nextZone.next(JSON.parse(this.optionOneDirectionsResponse.value.next_zone))
+            this.nextZone.next(this.optionOneDirectionsResponse.value.next_zone)
             this.gameService.changeZoneState(this.optionOnePressedResponse.value.id, this.nextZone.value[0]).subscribe(
             
             (response) => { 
@@ -429,7 +431,7 @@ onOptionTwo(): void {
     },
     (error: any) => console.log(error),
     () => {
-      this.zone.next(JSON.parse(this.optionOnePressedResponse.value.currentZone))
+      this.zone.next(this.optionOnePressedResponse.value.currentZone)
       this.gameService.getZoneData(this.zone.value).subscribe(
         
         (response) => { 
@@ -437,7 +439,7 @@ onOptionTwo(): void {
         },
         (error: any) => console.log(error),
         () => {
-          this.nextZone.next(JSON.parse(this.optionOneDirectionsResponse.value.next_zone))
+          this.nextZone.next(this.optionOneDirectionsResponse.value.next_zone)
           this.gameService.changeZoneState(this.optionOnePressedResponse.value.id, this.nextZone.value[1]).subscribe(
           
           (response) => { 
@@ -472,7 +474,7 @@ onOptionThree(): void {
     },
     (error: any) => console.log(error),
     () => {
-      this.zone.next(JSON.parse(this.optionOnePressedResponse.value.currentZone))
+      this.zone.next(this.optionOnePressedResponse.value.currentZone)
       this.gameService.getZoneData(this.zone.value).subscribe(
         
         (response) => { 
@@ -480,7 +482,7 @@ onOptionThree(): void {
         },
         (error: any) => console.log(error),
         () => {
-          this.nextZone.next(JSON.parse(this.optionOneDirectionsResponse.value.next_zone))
+          this.nextZone.next(this.optionOneDirectionsResponse.value.next_zone)
           this.gameService.changeZoneState(this.optionOnePressedResponse.value.id, this.nextZone.value[2]).subscribe(
           
           (response) => { 
