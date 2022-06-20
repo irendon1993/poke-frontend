@@ -191,7 +191,7 @@ export class GameUiComponent implements OnInit {
           (error: any) => console.log(error),
           () => {
             this.directions.next(this.directionsResponse.value.directions)
-            // console.log(this.zone.value)
+            console.log(this.directions.value)
             } 
         ) 
   },
@@ -397,6 +397,7 @@ onGetTrainerId() {
           (error: any) => console.log(error),
           () => {
             this.nextZone.next(this.optionOneDirectionsResponse.value.next_zone)
+            
             this.gameService.changeZoneState(this.optionOnePressedResponse.value.id, this.nextZone.value[0]).subscribe(
             
             (response) => { 
@@ -404,6 +405,7 @@ onGetTrainerId() {
             },
             (error: any) => console.log(error),
             () => {
+              console.log(this.nextZone.value)
               window.location.reload()
             }
             );
@@ -447,6 +449,7 @@ onOptionTwo(): void {
           },
           (error: any) => console.log(error),
           () => {
+            console.log(this.nextZone.value)
             window.location.reload()
           }
           );

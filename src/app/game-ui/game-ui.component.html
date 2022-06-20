@@ -2,8 +2,8 @@
   <div id="text" *ngIf="traveling">{{this.directionsResponse.value.zone_description}}</div>
   <div id="option-buttons" class="btn-grid" *ngIf="traveling">
     <button *ngIf="this.directions.value[0] && this.directions.value[0] != 0" class="btn" (click)="onOptionOne()">{{this.directions.value[0]}}</button>
-    <button *ngIf="this.directions.value[1]" class="btn" (click)="onOptionOne()">{{this.directions.value[1]}}</button>
-    <button *ngIf="this.directions.value[2]" class="btn" (click)="onOptionOne()">{{this.directions.value[2]}}</button>
+    <button *ngIf="this.directions.value[1]" class="btn" (click)="onOptionTwo()">{{this.directions.value[1]}}</button>
+    <button *ngIf="this.directions.value[2]" class="btn" (click)="onOptionThree()">{{this.directions.value[2]}}</button>
     <button class="btn" (click)="catchPokemon()">Catch a pokemon</button>
   </div>
 
