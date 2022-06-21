@@ -35,9 +35,13 @@
 
 
   <div class="gameOver" *ngIf="gameOver">
+    <div>Great job {{this.pokeballThrownResponse.value.name}}! You caught {{this.pics.length}} Pokemon!</div>
+    <div class="pcGameOver">
       <div *ngFor="let pic of this.pics">
         <img src={{pic}} class="pcPic" >
       </div>
+    </div> 
+    
       <button class="btn" (click)="startOver()">New Game</button>
   </div>
 </div>

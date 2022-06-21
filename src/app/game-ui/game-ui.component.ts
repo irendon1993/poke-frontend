@@ -162,7 +162,7 @@ export class GameUiComponent implements OnInit {
               console.log(this.traveling)
             }
             
-            
+            console.log(this.pokeballThrownResponse.value)
             console.log(this.gameInitResponse.value)
            }
     )
@@ -313,12 +313,12 @@ onGetTrainerId() {
             this.gameOver = true;
             console.log(this.pics)
           }
-        else if(this.pokeBalls > 0 && this.randomCaught < 61) {
+        else if(this.pokeBalls > 0 && this.randomCaught < 41) {
           console.log(this.randomCaught)
 
         }
 
-        else if (this.randomCaught > 61){
+        else if (this.randomCaught > 41){
           console.log(this.pokeballThrownResponse.value)
           console.log(this.randomCaught)
           this.pc = this.pokeballThrownResponse.value.pc

@@ -26,4 +26,13 @@ div {
 .game {
   height: 80%;
   background-color: #FCBF49;
+  font-size: 20px
+  /* display: flex; */
+}
+
+.gameUi {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
